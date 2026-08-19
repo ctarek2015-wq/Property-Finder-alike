@@ -23,3 +23,31 @@
 ## Reviews & Ratings (Seekers Only)
 
 - **As a Seeker (AAS)**, I want to leave a rating and review on a property's building/neighborhood after visiting, so other seekers know about noise levels or maintenance quality.
+
+#
+
+# App Wireframes:
+
+### 1. Role Specific Dashboards:
+
+![Role Specific Dashboards](./public/wireframe/roles-dashboards.png)
+
+### 2. Property Detail Page:
+
+![Property Detail Page](./public/wireframe/property-page.png)
+
+### 3. Property Search Results Page:
+
+![Property Search Results Page](./public/wireframe/search-results.png)
+
+### 4. Global Navigation Bar:
+
+![Global Navigation Bar](./public/wireframe/global-navbar.png)
+
+#
+
+# ERD:
+
+![ERD](./public/erd/ERD.png)
+
+#

@@ -5,12 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <%- include('../../../partials/_navbar.ejs') %>
+  <link rel="stylesheet" href="/style.css" />
 </head>
+<%- include('../../../partials/_navbar.ejs') %>
 
 <body>
   <h1>Welcome <%= user.username %></h1>
-  <p>You are logged in as a "<%= user.role %>" user!</p>
+
+  <a href="/owners/properties/new"><button>Add New Property</button></a>
+
+
+  <% if(properties === []){ %>
+  <h3>No properties are Listed</h3>
+  <% } %>
 
   <% properties.forEach(prop=>{ %>
 

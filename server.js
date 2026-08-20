@@ -21,7 +21,7 @@ const propRouter = require("./routers/propRouter");
 
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "./public")));
+app.use(express.static(path.join(__dirname, "./public/stylesheets")));
 app.use(methodOverride("_method"));
 app.use(
   session({

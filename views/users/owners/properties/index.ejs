@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <%- include('../../../partials/_navbar.ejs') %>
+</head>
+
+<body>
+  <h1>Welcome <%= user.username %></h1>
+  <p>You are logged in as a "<%= user.role %>" user!</p>
+
+  <% properties.forEach(prop=>{ %>
+
+  <fieldset>
+    <legend><%= prop.title %></legend>
+
+    <p>Description: <%= prop.description %></p>
+    <p>Location: <%= prop.location %></p>
+    <p>Property Type: <%= prop.listingType %></p>
+    <p>Price: <%= prop.price %></p>
+    <p>Area: <%= prop.area %></p>
+    <p>Bedrooms: <%= prop.bedrooms %></p>
+    <p>Bathrooms: <%= prop.bathrooms %></p>
+    <% if(prop.available === true){ %>
+    <p>Available for viewings</p>
+    <% }else{ %>
+    <p>Not Available for viewings</p>
+    <% } %>
+
+    <a href="/owners/properties/<%= prop._id %>"><button>View Property</button></a>
+
+  </fieldset>
+
+
+  <% }) %>
+
+
+</body>
+
+</html>

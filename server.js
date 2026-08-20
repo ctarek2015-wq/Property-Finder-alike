@@ -17,6 +17,7 @@ const addUserToViews = require("./middlewares/addUserToViews");
 // Routers
 const authRouter = require("./routers/authRouter");
 const pagesRouter = require("./routers/pagesRouter");
+const propRouter = require("./routers/propRouter");
 
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
@@ -46,9 +47,8 @@ app.use("/auth", authRouter);
 app.use(isSignedIn);
 //Private Routes
 
-app.get("/protected", isSignedIn, (req, res) => {
-  res.send(`you are in as ${req.session.user.username}`);
-});
+app.use("/owners/properties", propRouter);
+
 //port listening
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

@@ -11,7 +11,7 @@
 <body>
   <% if(user){ %>
   <h1>Welcome <%= user.username %></h1>
-  <p>You are logged in as a "<%= role %>" user!</p>
+  <p>You are logged in as a "<%= user.role %>" user!</p>
   <% }else{ %>
   <h1>Welcome to the app!</h1>
   <% } %>

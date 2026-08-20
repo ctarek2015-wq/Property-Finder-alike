@@ -27,7 +27,10 @@ const register = async (req, res) => {
       role: "seeker",
     });
 
-    if (ownerExists || seekerExists) {
+    if (req.body.role === "owner" && ownerExists) {
+      return res.send("email or password is incorrect");
+    }
+    if (req.body.role === "seeker" && seekerExists) {
       return res.send("email or password is incorrect");
     }
 
@@ -45,6 +48,7 @@ const register = async (req, res) => {
 
     req.session.user = {
       username: createUser.username,
+      role: createUser.role,
       _id: createUser._id,
     };
     req.session.save(() => {
@@ -77,6 +81,7 @@ const login = async (req, res) => {
 
     req.session.user = {
       username: userExists.username,
+      role: userExists.role,
       _id: userExists._id,
     };
 

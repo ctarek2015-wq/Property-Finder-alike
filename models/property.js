@@ -20,6 +20,17 @@ const propertySchema = new mongoose.Schema({
   },
   location: {
     type: String,
+    enum: [
+      "manama",
+      "al hidd",
+      "muharraq",
+      "rifaa",
+      "jidd hafs",
+      "hamad town",
+      "isa town",
+      "hawar islands",
+      "sitra",
+    ],
     required: true,
   },
   area: {

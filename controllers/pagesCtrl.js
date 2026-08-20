@@ -1,13 +1,19 @@
-const User = require("../models/users");
-
 const home = async (req, res) => {
-  if (!req.session.user) {
-    return res.render("index.ejs");
+  try {
+    if (!req.session) {
+      return res.render("index.ejs");
+    }
+    const role = req.session.user.role;
+
+    if (role === "seeker") {
+      return res.render("index.ejs", { role: "seeker" });
+    }
+    if (role === "owner") {
+      return res.redirect("/owners/properties");
+    }
+  } catch (err) {
+    console.log(err.message);
   }
-  const user = await User.findOne({
-    _id: req.session.user._id,
-  });
-  res.render("index.ejs", { role: user.role });
 };
 
 module.exports = { home };

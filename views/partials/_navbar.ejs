@@ -1,5 +1,11 @@
 <nav>
   <% if(user){ %>
+  <% if(user.role === 'owner'){ %>
+  <a href="/owners/properties/new">List New Property</a>
+  <% }%>
+  <% if(user.role === 'seeker'){ %>
+  <!-- <a href="/owners/properties/new">List New Property</a> -->
+  <% }%>
   <a href="/auth/sign-out">Sign Out</a>
   <% }else{ %>
   <a href="/auth/sign-up">Sign Up</a>

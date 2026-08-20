@@ -1,6 +1,6 @@
 const home = async (req, res) => {
   try {
-    if (!req.session) {
+    if (!req.session.user) {
       return res.render("index.ejs");
     }
     if (req.session.user.role === "seeker") {

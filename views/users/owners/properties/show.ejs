@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<%- include('../../../partials/_navbar.ejs') %>
+
+<body>
+  <h1><%= property.title %></h1>
+
+  <fieldset>
+
+    <p>Description: <%= property.description %></p>
+    <p>Location: <%= property.location %></p>
+    <p>Property Type: <%= property.listingType %></p>
+    <p>Price: <%= property.price %></p>
+    <p>Area: <%= property.area %></p>
+    <p>Bedrooms: <%= property.bedrooms %></p>
+    <p>Bathrooms: <%= property.bathrooms %></p>
+    <% if(property.available === true){ %>
+    <p>Available for viewings</p>
+    <% }else{ %>
+    <p>Not Available for viewings</p>
+    <% } %>
+
+    <fieldset>
+      <legend>Property Images:</legend>
+      <img src="<%= property.images %>" alt="">
+    </fieldset>
+
+    <a href="/owners/properties/<%= property._id %>/edit"><button>Edit Property</button></a>
+
+    <form action="/owners/properties/<%= property._id %>?_method=DELETE" method="post"><button>Delete Property</button></form>
+
+  </fieldset>
+
+
+
+
+</body>
+
+</html>

@@ -6,12 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign Up</title>
 </head>
+<%- include('../partials/_navbar') %>
 
 <body>
   <h1>Sign in to your account!</h1>
   <form action="/auth/sign-in" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required />
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" required />
+
+    <fieldset>
+      <legend>Role:</legend>
+
+      <input type="radio" value="owner" id="owner" name="role" />
+      <label for="owner">owner</label>
+
+      <input type="radio" value="seeker" id="seeker" name="role" checked />
+      <label for="seeker">seeker</label>
+
+    </fieldset>
 
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" required />

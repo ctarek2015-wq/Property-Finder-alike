@@ -6,20 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home Page</title>
 </head>
+<%- include('./partials/_navbar') %>
 
 <body>
   <% if(user){ %>
-  <h1>Welcome <%= user.username %>
-    <p>
-      <a href="/protected">protected page</a>
-      <a href="/auth/sign-out">Sign Out</a>
-    </p>
-  </h1>
+  <h1>Welcome <%= user.username %></h1>
+  <p>You are logged in as a "<%= role %>" user!</p>
   <% }else{ %>
   <h1>Welcome to the app!</h1>
   <% } %>
-  <a href="/auth/sign-up">Register</a>
-  <a href="/auth/sign-in">Sign In</a>
 </body>
 
 </html>

@@ -8,23 +8,38 @@ const signup = async (req, res) => {
 
 const register = async (req, res) => {
   try {
+    // verify all fields are not empty
+    const { username, email, password, confirmPassword } = req.body;
+
+    if (!username || !email || !password || !confirmPassword) {
+      return res.send("All fields are required");
+    }
+
     //verify if the user name exists
     //if the uer exists , send err msg
-    const userExists = await User.findOne({ username: req.body.username });
-    if (userExists) {
-      return res.send("username or password is incorrect");
+    const ownerExists = await User.findOne({
+      email: req.body.email,
+      role: "owner",
+    });
+
+    const seekerExists = await User.findOne({
+      email: req.body.email,
+      role: "seeker",
+    });
+
+    if (ownerExists || seekerExists) {
+      return res.send("email or password is incorrect");
     }
 
     //else check the pw match
     // else send err msg
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send("username or password is incorrect");
+      return res.send("email or password is incorrect");
     }
     //encrypt the pw
 
     const hashed = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
     req.body.password = hashed;
-
     // if yes, create new user, redirect home page
     const createUser = await User.create(req.body);
 
@@ -35,10 +50,8 @@ const register = async (req, res) => {
     req.session.save(() => {
       res.redirect("/");
     });
-    console.log(createUser);
   } catch (err) {
-    console.log(err.message);
-    res.send("errooooooorrrrrrrrr");
+    res.redirect("/auth/sign-up");
   }
 };
 
@@ -47,25 +60,32 @@ const signin = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const userExists = await User.findOne({ username: req.body.username });
+  try {
+    const userExists = await User.findOne({
+      email: req.body.email,
+      role: req.body.role,
+    });
 
-  //allow user if exists
-  if (!userExists) {
-    return res.send("username or password is incorrect");
+    //allow user if exists
+    if (!userExists) {
+      return res.send("email or password is incorrect");
+    }
+    //make sure if user pw matches the db pw (compare)
+    if (!bcrypt.compareSync(req.body.password, userExists.password)) {
+      return res.send("email or password is incorrect");
+    }
+
+    req.session.user = {
+      username: userExists.username,
+      _id: userExists._id,
+    };
+
+    req.session.save(() => {
+      res.redirect("/");
+    });
+  } catch (err) {
+    res.redirect("/auth/sign-in");
   }
-  //make sure if user pw matches the db pw (compare)
-  if (!bcrypt.compareSync(req.body.password, userExists.password)) {
-    return res.send("username or password is incorrect");
-  }
-
-  req.session.user = {
-    username: userExists.username,
-    _id: userExists._id,
-  };
-
-  req.session.save(() => {
-    res.redirect("/");
-  });
 };
 
 const signout = async (req, res) => {

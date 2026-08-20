@@ -48,6 +48,6 @@
 
 # ERD:
 
-![ERD](./public/erd/ERD.png)
+![ERD](./public/erd/ERD.svg)
 
 #

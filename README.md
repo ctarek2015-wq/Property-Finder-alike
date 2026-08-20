@@ -13,12 +13,12 @@
 
 ## Search, Filtering & Pagination (Seekers)
 
-- **As a Seeker (AAS)**, I want to filter search results by status (Rent/Buy), maximum price, and property type (Apartment/Villa) so I only see relevant homes.
+- **As a Seeker (AAS)**, I want to filter search results by status (Rent/Buy), maximum price, area, and property type (Apartment/Villa) so I only see relevant homes.
 
-## Viewing Appointments (Replacing "Bookings")
+## Viewing Appointments
 
-- **As a Seeker (AAS)**, I want to select an available date and time slot from a calendar on the listing to schedule an in-person viewing.
-- **As an Owner (AAO)**, I want to see a schedule of all my upcoming property viewings so I can meet with potential clients.
+- **As a Seeker (AAS)**, I want to select an available date and time slot from a calendar on the listing to schedule an in-person viewing once per date.
+- **As an Owner (AAO)**, I want to determine available dates and timeslots,also to see a schedule of all my upcoming property viewings so I can meet with potential clients.
 
 ## Reviews & Ratings (Seekers Only)
 

@@ -30,7 +30,7 @@
         <select name="location" id="location">
           <option value="">--Please choose an option--</option>
           <% locations.forEach(location => { %>
-          <option value="<%= location %>" <%= property.location === location ? 'selected' : '' %>>
+          <option value="<%= location %>" <%= location === property.location ? 'selected' : '' %>>
             <%= location %>
           </option>
           <% }); %>

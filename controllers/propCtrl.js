@@ -25,9 +25,8 @@ const show = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const locations = Property.schema.path("location").enumValues;
   const property = await Property.findById(req.params.id);
-  res.render("users/owners/properties/edit.ejs", { property, locations });
+  res.render("users/owners/properties/edit.ejs", { property });
 };
 
 const update = async (req, res) => {

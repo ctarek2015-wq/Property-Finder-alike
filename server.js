@@ -10,16 +10,14 @@ const { MongoStore } = require("connect-mongo");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const port = process.env.PORT || 3000;
-
-const isSignedIn = require("./middlewares/isSignedIn");
-const addUserToViews = require("./middlewares/addUserToViews");
-const addPropToViews = require("./middlewares/addPropToViews");
-
 // Routers
 const authRouter = require("./routers/authRouter");
 const pagesRouter = require("./routers/pagesRouter");
 const propRouter = require("./routers/propRouter");
-
+// Custom Middlewares
+const isSignedIn = require("./middlewares/isSignedIn");
+const addUserToViews = require("./middlewares/addUserToViews");
+const addPropToViews = require("./middlewares/addPropToViews");
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public/stylesheets")));
@@ -39,16 +37,13 @@ app.use(addUserToViews);
 app.use(addPropToViews);
 
 // Routes
+// Public Routes
 app.use("", pagesRouter);
 app.use("/auth", authRouter);
 
-//Public Routes
-
 // Custom Middleware
-
 app.use(isSignedIn);
-//Private Routes
-
+// Private Routes
 app.use("/properties", propRouter);
 
 //port listening

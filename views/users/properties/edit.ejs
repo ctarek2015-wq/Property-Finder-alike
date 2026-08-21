@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+
+</head>
+<%- include('../../partials/_navbar.ejs') %>
+
+<body>
+  <h1>Welcome <%= user.username %></h1>
+
+  <form action="/properties/<%= property._id %>?_method=PUT" method="post">
+
+    <fieldset>
+      <legend>Edit Property:</legend>
+      <fieldset>
+        <legend>Property Details:</legend>
+
+        <label for="title">Property Title:</label>
+        <input type="text" name="title" id="title" value="<%= property.title %>" required>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description"><%= property.description %></textarea>
+
+        <label for="location">Location:</label>
+        <select name="location" id="location">
+          <option value="">--Please choose an option--</option>
+          <% locations.forEach(location => { %>
+          <option value="<%= location %>" <%= location === property.location ? 'selected' : '' %>>
+            <%= location %>
+          </option>
+          <% }); %>
+        </select>
+
+        <fieldset>
+          <legend>Property Type:</legend>
+
+          <input type="radio" name="listingType" id="rent" value="rent" <%= property.listingType === 'rent' ? 'checked' : '' %>>
+          <label for="rent">Rent</label>
+          <input type="radio" name="listingType" id="sale" value="sale" <%= property.listingType === 'sale' ? 'checked' : '' %>>
+          <label for="sale">Sale</label>
+
+        </fieldset>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" id="price" value="<%= property.price %>" required>
+
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Specifications:</legend>
+
+        <label for="area">Area (in Square Meters):</label>
+        <input type="number" name="area" id="area" value="<%= property.area %>" required>
+
+        <label for="bedrooms">Bedrooms:</label>
+        <input type="number" name="bedrooms" id="bedrooms" value="<%= property.bedrooms %>" required>
+
+        <label for="bathrooms">Bathrooms:</label>
+        <input type="number" name="bathrooms" id="bathrooms" value="<%= property.bathrooms %>" required>
+
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Images:</legend>
+
+        <label for="images">Paste URL here:</label>
+        <input type="text" name="images" id="images" value="<%= property.images %>">
+
+      </fieldset>
+
+      <fieldset>
+        <legend>Property Availability:</legend>
+
+        <input type="radio" name="available" value="true" id="true" <%= property.available === true ? 'checked' : '' %>>
+        <label for="true">Available for viewings</label>
+
+        <input type="radio" name="available" value="false" id="false" <%= property.available === false ? 'checked' : '' %>>
+        <label for="false">Not Available for viewings</label>
+
+        <label for="dateFrom">From</label>
+        <input type="date" name="dateFrom" id="dateFrom" value="<%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %>" required>
+        <label for="dateTo">To</label>
+        <input type="date" name="dateTo" id="dateTo" value="<%= property.availableAppointments.dateTo.toISOString().split('T')[0] %>" required>
+        <fieldset>
+          <legend>Time Slots:</legend>
+          <% timeSlots.forEach(time => { %>
+          <input type="checkbox" name="time" value="<%= time %>" <% if(property.availableAppointments.time.includes(time)) { %>checked<% } %> id="<%= time %>">
+          <label for="<%= time %>"><%= time %></label>
+          <% }); %>
+        </fieldset>
+
+      </fieldset>
+
+    </fieldset>
+    <button type="submit">Submit Property</button>
+  </form>
+
+
+
+
+</body>
+
+</html>

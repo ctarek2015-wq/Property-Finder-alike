@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<%- include('../../../partials/_navbar.ejs') %>
+
+<body>
+  <h1>Welcome <%= user.username %></h1>
+
+  <a href="/properties/new"><button>Add New Property</button></a>
+
+  // Filter properties owned by the current user
+  <% const owned = properties.filter(prop=>prop.owner._id.toString() === user._id) %>
+
+  <% if(owned.length === 0){ %>
+  <p>You have no properties listed.</p>
+  <% } %>
+
+  <% owned.forEach(prop=>{ %>
+
+  <fieldset>
+    <legend><%= prop.title %></legend>
+    <p>Owner: <%= prop.owner.username %></p>
+    <p>Description: <%= prop.description %></p>
+    <p>Location: <%= prop.location %></p>
+    <p>Property Type: <%= prop.listingType %></p>
+    <p>Price: <%= prop.price %></p>
+    <p>Area: <%= prop.area %></p>
+    <p>Bedrooms: <%= prop.bedrooms %></p>
+    <p>Bathrooms: <%= prop.bathrooms %></p>
+    <% if(prop.available === true){ %>
+    <p>Available for viewings</p>
+    <% }else{ %>
+    <p>Not Available for viewings</p>
+    <% } %>
+
+    <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
+
+  </fieldset>
+  <% }) %>
+
+</body>
+
+</html>

@@ -1,17 +1,21 @@
 const Property = require("../models/property");
+const Appointment = require("../models/appointment");
 
 const index = async (req, res) => {
-  res.render("users/owners/properties/index.ejs");
+  res.render("users/properties/index.ejs");
 };
 
 const newProp = async (req, res) => {
-  res.render("users/owners/properties/new.ejs");
+  res.render("users/properties/new.ejs");
 };
 
 const create = async (req, res) => {
   try {
     const newProp = await Property.create(req.body);
+    const newAppointment = await Appointment.create(req.body);
     newProp.owner = req.session.user._id;
+    newProp.availableAppointments = newAppointment._id;
+    await newAppointment.save();
     await newProp.save();
     res.redirect("/properties");
   } catch (err) {
@@ -21,18 +25,28 @@ const create = async (req, res) => {
 
 const show = async (req, res) => {
   const property = await Property.findById(req.params.id);
-  res.render("users/owners/properties/show.ejs", { property });
+  res.render("users/properties/show.ejs", { property });
 };
 
 const edit = async (req, res) => {
-  const property = await Property.findById(req.params.id);
-  res.render("users/owners/properties/edit.ejs", { property });
+  const property = await Property.findById(req.params.id).populate(
+    "availableAppointments",
+  );
+  console.log(property);
+  res.render("users/properties/edit.ejs", { property });
 };
 
 const update = async (req, res) => {
   const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
+  await Appointment.findByIdAndUpdate(
+    property.availableAppointments,
+    req.body,
+    {
+      new: true,
+    },
+  );
   res.redirect(`/properties/${property._id}`);
 };
 

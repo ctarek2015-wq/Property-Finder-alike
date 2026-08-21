@@ -58,6 +58,10 @@ const propertySchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  availableAppointments: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Appointment",
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

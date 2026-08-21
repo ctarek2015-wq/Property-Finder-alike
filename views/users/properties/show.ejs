@@ -7,13 +7,13 @@
   <title>Document</title>
   <link rel="stylesheet" href="/style.css" />
 </head>
-<%- include('../../../partials/_navbar.ejs') %>
+<%- include('../../partials/_navbar.ejs') %>
 
 <body>
   <h1><%= property.title %></h1>
 
   <fieldset>
-
+    <p>Owner: <%= property.owner.username %></p>
     <p>Description: <%= property.description %></p>
     <p>Location: <%= property.location %></p>
     <p>Property Type: <%= property.listingType %></p>
@@ -32,8 +32,11 @@
       <img src="<%= property.images %>" alt="">
     </fieldset>
 
-    <a href="/seekers/properties/<%= property._id %>/schedule"><button>schedule an in-person viewing</button></a>
 
+    <% if(user._id === property.owner._id.toString()){ %>
+    <a href="/properties/<%= property._id %>/edit"><button>Edit Property</button></a>
+    <form action="/properties/<%= property._id %>?_method=DELETE" method="post"><button>Delete Property</button></form>
+    <% } %>
   </fieldset>
 
 

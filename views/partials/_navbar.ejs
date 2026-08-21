@@ -2,7 +2,8 @@
   <a href="/">Home Page</a>
   <% if(user){ %>
   <% if(user.role === 'owner'){ %>
-  <a href="/owners/properties/new">List New Property</a>
+  <a href="/properties/new">List New Property</a>
+  <a href="/properties">View Listed Properties</a>
   <% }%>
   <% if(user.role === 'seeker'){ %>
   <!-- <a href="/owners/properties/new">List New Property</a> -->

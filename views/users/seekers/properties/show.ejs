@@ -32,9 +32,7 @@
       <img src="<%= property.images %>" alt="">
     </fieldset>
 
-    <a href="/properties/<%= property._id %>/edit"><button>Edit Property</button></a>
-
-    <form action="/properties/<%= property._id %>?_method=DELETE" method="post"><button>Delete Property</button></form>
+    <a href="/seekers/properties/<%= property._id %>/schedule"><button>schedule an in-person viewing</button></a>
 
   </fieldset>
 

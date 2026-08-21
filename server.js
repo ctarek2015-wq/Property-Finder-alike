@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000;
 
 const isSignedIn = require("./middlewares/isSignedIn");
 const addUserToViews = require("./middlewares/addUserToViews");
+const addPropToViews = require("./middlewares/addPropToViews");
 
 // Routers
 const authRouter = require("./routers/authRouter");
@@ -35,6 +36,7 @@ app.use(
 );
 app.use(morgan("dev"));
 app.use(addUserToViews);
+app.use(addPropToViews);
 
 // Routes
 app.use("", pagesRouter);
@@ -47,7 +49,7 @@ app.use("/auth", authRouter);
 app.use(isSignedIn);
 //Private Routes
 
-app.use("/owners/properties", propRouter);
+app.use("/properties", propRouter);
 
 //port listening
 app.listen(port, () => {

@@ -13,39 +13,41 @@
 <body>
   <h1>Welcome <%= user.username %></h1>
 
-  <form action="/properties" method="post">
+  <form action="/owners/properties/<%= property._id %>?_method=PUT" method="post">
 
     <fieldset>
-      <legend>New Property:</legend>
+      <legend>Edit Property:</legend>
       <fieldset>
         <legend>Property Details:</legend>
 
         <label for="title">Property Title:</label>
-        <input type="text" name="title" id="title" required>
+        <input type="text" name="title" id="title" value="<%= property.title %>" required>
 
         <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
+        <textarea name="description" id="description"><%= property.description %></textarea>
 
         <label for="location">Location:</label>
         <select name="location" id="location">
           <option value="">--Please choose an option--</option>
           <% locations.forEach(location => { %>
-          <option value="<%= location %>"><%= location %></option>
+          <option value="<%= location %>" <%= property.location === location ? 'selected' : '' %>>
+            <%= location %>
+          </option>
           <% }); %>
         </select>
 
         <fieldset>
           <legend>Property Type:</legend>
 
-          <input type="radio" name="listingType" id="rent" value="rent" checked>
+          <input type="radio" name="listingType" id="rent" value="rent" <%= property.listingType === 'rent' ? 'checked' : '' %>>
           <label for="rent">Rent</label>
-          <input type="radio" name="listingType" id="sale" value="sale">
+          <input type="radio" name="listingType" id="sale" value="sale" <%= property.listingType === 'sale' ? 'checked' : '' %>>
           <label for="sale">Sale</label>
 
         </fieldset>
 
         <label for="price">Price:</label>
-        <input type="number" name="price" id="price" required>
+        <input type="number" name="price" id="price" value="<%= property.price %>" required>
 
       </fieldset>
 
@@ -53,13 +55,13 @@
         <legend>Property Specifications:</legend>
 
         <label for="area">Area (in Square Meters):</label>
-        <input type="number" name="area" id="area" required>
+        <input type="number" name="area" id="area" value="<%= property.area %>" required>
 
         <label for="bedrooms">Bedrooms:</label>
-        <input type="number" name="bedrooms" id="bedrooms" required>
+        <input type="number" name="bedrooms" id="bedrooms" value="<%= property.bedrooms %>" required>
 
         <label for="bathrooms">Bathrooms:</label>
-        <input type="number" name="bathrooms" id="bathrooms" required>
+        <input type="number" name="bathrooms" id="bathrooms" value="<%= property.bathrooms %>" required>
 
       </fieldset>
 
@@ -67,17 +69,17 @@
         <legend>Property Images:</legend>
 
         <label for="images">Paste URL here:</label>
-        <input type="text" name="images" id="images">
+        <input type="text" name="images" id="images" value="<%= property.images %>">
 
       </fieldset>
 
       <fieldset>
         <legend>Property Availability:</legend>
 
-        <input type="radio" name="available" value="true" id="true" checked>
+        <input type="radio" name="available" value="true" id="true" <%= property.available === true ? 'checked' : '' %>>
         <label for="true">Available for viewings</label>
 
-        <input type="radio" name="available" value="false" id="false">
+        <input type="radio" name="available" value="false" id="false" <%= property.available === false ? 'checked' : '' %>>
         <label for="false">Not Available for viewings</label>
 
       </fieldset>

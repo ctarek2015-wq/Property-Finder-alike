@@ -12,18 +12,18 @@
 <body>
   <h1>Welcome <%= user.username %></h1>
 
-  <a href="/owners/properties/new"><button>Add New Property</button></a>
+  <a href="/properties/new"><button>Add New Property</button></a>
 
-
-  <% if(properties === []){ %>
-  <h3>No properties are Listed</h3>
+  <% const owned = properties.filter(prop=>prop.owner._id.toString() === user._id) %>
+  <% if(owned.length === 0){ %>
+  <p>You have no properties listed.</p>
   <% } %>
 
-  <% properties.forEach(prop=>{ %>
+  <% owned.forEach(prop=>{ %>
 
   <fieldset>
     <legend><%= prop.title %></legend>
-
+    <p>Owner: <%= prop.owner.username %></p>
     <p>Description: <%= prop.description %></p>
     <p>Location: <%= prop.location %></p>
     <p>Property Type: <%= prop.listingType %></p>
@@ -37,13 +37,10 @@
     <p>Not Available for viewings</p>
     <% } %>
 
-    <a href="/owners/properties/<%= prop._id %>"><button>View Property</button></a>
+    <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
 
   </fieldset>
-
-
   <% }) %>
-
 
 </body>
 

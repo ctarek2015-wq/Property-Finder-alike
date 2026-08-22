@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/style.css" />
+
+</head>
+<%- include('../../../partials/_navbar.ejs') %>
+
+<body>
+  <h1>Welcome <%= user.username %></h1>
+
+  <form action="/properties/<%= property._id %>?_method=PUT" method="post">
+
+    <fieldset>
+      <legend>New Appointment:</legend>
+
+
+      <label for="appointmentDate">Appointment Date:</label>
+      <select name="appointmentDate" id="appointmentDate" required>
+        <option value="">--Please choose an option--</option>
+        <% availableDates.forEach(date => { %>
+        <option value="<%= date %>"><%= date %></option>
+        <% }); %>
+      </select>
+
+
+      <label for="appointmentTime">Appointment Time:</label>
+      <select name="appointmentTime" id="appointmentTime" required>
+        <option value="">--Please choose an option--</option>
+        <% time.forEach(time => { %>
+        <option value="<%= time %>"><%= time %></option>
+        <% }); %>
+      </select>
+
+
+    </fieldset>
+    <button type="submit">Submit Property</button>
+  </form>
+
+
+
+
+</body>
+
+</html>

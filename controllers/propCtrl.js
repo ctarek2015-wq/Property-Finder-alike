@@ -24,16 +24,16 @@ const create = async (req, res) => {
 };
 
 const show = async (req, res) => {
-  const property = await Property.findById(req.params.id).populate(
-    "availableAppointments",
-  );
+  const property = await Property.findById(req.params.id)
+    .populate("availableAppointments")
+    .populate("owner", "username");
   res.render("users/properties/show.ejs", { property });
 };
 
 const edit = async (req, res) => {
-  const property = await Property.findById(req.params.id).populate(
-    "availableAppointments",
-  );
+  const property = await Property.findById(req.params.id)
+    .populate("availableAppointments")
+    .populate("owner", "username");
   res.render("users/properties/edit.ejs", { property });
 };
 

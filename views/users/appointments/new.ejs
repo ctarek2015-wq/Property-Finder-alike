@@ -13,7 +13,7 @@
 <body>
   <h1>Welcome <%= user.username %></h1>
 
-  <form action="/properties" method="post">
+  <form action="/properties/<%= prop._id %>/appointments" method="post">
 
     <fieldset>
       <legend>New Appointment:</legend>

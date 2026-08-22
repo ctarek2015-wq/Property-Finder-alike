@@ -46,7 +46,7 @@ app.use("/auth", authRouter);
 app.use(isSignedIn);
 // Private Routes
 app.use("/properties", propRouter);
-app.use("/appointments", appointmentRouter);
+app.use("/properties/:id/appointments", appointmentRouter);
 
 //port listening
 app.listen(port, () => {

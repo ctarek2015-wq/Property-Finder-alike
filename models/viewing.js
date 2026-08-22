@@ -32,12 +32,10 @@ const viewingSchema = new mongoose.Schema({
   propertyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Property",
-    required: true,
   },
   viewerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
   },
 });
 

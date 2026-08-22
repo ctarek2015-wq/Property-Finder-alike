@@ -1,8 +1,25 @@
 const Viewing = require("../models/viewing");
 const Property = require("../models/property");
 
-const index = (req, res) => {
-  res.send("Appointment index");
+const index = async (req, res) => {
+  try {
+    // populate just username of owner of propertyId and property title
+
+    const viewings = await Viewing.find({
+      viewerId: req.session.user._id,
+    }).populate({
+      path: "propertyId",
+      select: "owner title",
+      populate: {
+        path: "owner",
+        select: "username",
+      },
+    });
+    console.log(viewings);
+    res.render("users/appointments/index.ejs", { viewings });
+  } catch (err) {
+    console.error(err.message);
+  }
 };
 
 const newAppointment = async (req, res) => {
@@ -20,12 +37,19 @@ const newAppointment = async (req, res) => {
     const dateString = date.toISOString().split("T")[0];
     availableDates.push(dateString);
   }
-  console.log("Available Dates:", availableDates);
   res.render("users/appointments/new.ejs", { prop, time, availableDates });
 };
 
-const create = (req, res) => {
-  res.send("Appointment created");
+const create = async (req, res) => {
+  try {
+    const newViewing = new Viewing(req.body);
+    newViewing.viewerId = req.session.user._id;
+    newViewing.propertyId = req.params.id;
+    await newViewing.save();
+    res.redirect(`/properties/${req.params.id}/appointments`);
+  } catch (err) {
+    console.error(err.message);
+  }
 };
 
 const show = (req, res) => {

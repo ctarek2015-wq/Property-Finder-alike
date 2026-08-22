@@ -1,7 +1,6 @@
 const express = require("express");
-const pagesCtrl = require("../controllers/pagesCtrl");
-
 const router = express.Router();
+const pagesCtrl = require("../controllers/pagesCtrl");
 
 router.get("/", pagesCtrl.home);
 

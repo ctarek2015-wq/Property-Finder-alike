@@ -1,9 +1,7 @@
 const express = require("express");
-const isSignedIn = require("../middlewares/isSignedIn");
-
 const router = express.Router();
-
 const authCtrl = require("../controllers/authCtrl");
+const isSignedIn = require("../middlewares/isSignedIn");
 
 router.get("/sign-up", authCtrl.signup);
 router.post("/sign-up", authCtrl.register);

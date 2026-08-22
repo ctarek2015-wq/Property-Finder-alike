@@ -36,7 +36,11 @@
     <% }else{ %>
     <p>Not Available for viewings</p>
     <% } %>
-
+    <% if(prop.availableAppointments){ %>
+    <p>From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+    <p>To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+    <p>Time Slots: <%= prop.availableAppointments.time %></p>
+    <% } %>
     <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
 
   </fieldset>

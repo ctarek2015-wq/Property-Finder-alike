@@ -21,17 +21,22 @@
     <p>Area: <%= property.area %></p>
     <p>Bedrooms: <%= property.bedrooms %></p>
     <p>Bathrooms: <%= property.bathrooms %></p>
-    <% if(property.available === true){ %>
-    <p>Available for viewings</p>
-    <% }else{ %>
-    <p>Not Available for viewings</p>
-    <% } %>
 
     <fieldset>
       <legend>Property Images:</legend>
       <img src="<%= property.images %>" alt="">
     </fieldset>
 
+    <% if(property.available === true){ %>
+    <p>Available for viewings</p>
+    <% }else{ %>
+    <p>Not Available for viewings</p>
+    <% } %>
+    <% if(property.availableAppointments){ %>
+    <p>From: <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+    <p>To: <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+    <p>Time Slots: <%= property.availableAppointments.time %></p>
+    <% } %>
 
     <% if(user._id === property.owner._id.toString()){ %>
     <a href="/properties/<%= property._id %>/edit"><button>Edit Property</button></a>

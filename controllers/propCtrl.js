@@ -1,6 +1,7 @@
 const Property = require("../models/property");
 const Appointment = require("../models/appointment");
 const Viewing = require("../models/viewing");
+const Review = require("../models/review");
 
 const index = async (req, res) => {
   res.render("users/properties/index.ejs");
@@ -28,14 +29,16 @@ const show = async (req, res) => {
   const property = await Property.findById(req.params.id)
     .populate("availableAppointments")
     .populate("owner", "username");
+  const propReviews = await Review.find({ propertyId: req.params.id });
   const seekerViewings = await Viewing.find({
     viewerId: req.session.user._id,
     propertyId: req.params.id,
   });
-  console.log(seekerViewings);
+
   res.render("users/properties/show.ejs", {
     property,
     seekerViewings,
+    propReviews,
   });
 };
 

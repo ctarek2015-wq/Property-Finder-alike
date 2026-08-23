@@ -31,7 +31,11 @@
 
     <p>Property Owner: <%= viewing.ownerId.username %></p>
     <p>Status: <%= viewing.status %></p>
+    <% if(viewing.status === 'completed'){ %>
+    <a href="/properties/<%= viewing.propertyId._id %>"><button>Please Leave a Review</button></a>
+    <% }else{ %>
     <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
+    <% } %>
     <% if(viewing.status === 'pending'){ %>
     <a href="/appointments/<%= viewing._id %>/edit"><button>Edit Appointment</button></a>
     <% }}else{ %>

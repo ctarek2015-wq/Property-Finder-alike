@@ -50,7 +50,38 @@
     <% } %>
   </fieldset>
 
+  <fieldset>
+    <legend>Reviews:</legend>
+    <% if(propReviews.length > 0){ %>
+    <% propReviews.forEach(review => { %>
+    <p>Rating: <%= review.rating %></p>
+    <p>Comment: <%= review.comment %></p>
+    <% }) %>
+    <% }else{ %>
+    <p>No reviews yet.</p>
+    <% } %>
+  </fieldset>
 
+  <% if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'completed')){ %>
+  <fieldset>
+    <legend>Leave a Review:</legend>
+    <form action="/reviews?reviewerId=<%= user._id %>&propertyId=<%= property._id %>" method="post">
+      <select name="rating" id="rating" required>
+        <option value="">Select Rating</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label for="comment">Comment:</label>
+      <textarea id="comment" name="comment" required></textarea>
+
+      <button type="submit">Submit Review</button>
+    </form>
+  </fieldset>
+  <% } %>
 
 
 </body>

@@ -15,6 +15,7 @@ const authRouter = require("./routers/authRouter");
 const pagesRouter = require("./routers/pagesRouter");
 const propRouter = require("./routers/propRouter");
 const appointmentRouter = require("./routers/appointmentRouter");
+const reviewRouter = require("./routers/reviewRouter");
 // Custom Middlewares
 const isSignedIn = require("./middlewares/isSignedIn");
 const addUserToViews = require("./middlewares/addUserToViews");
@@ -47,6 +48,7 @@ app.use(isSignedIn);
 // Private Routes
 app.use("/properties", propRouter);
 app.use("/appointments", appointmentRouter);
+app.use("/reviews", reviewRouter);
 
 //port listening
 app.listen(port, () => {

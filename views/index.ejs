@@ -43,7 +43,13 @@
     <p>To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
     <p>Time Slots: <%= prop.availableAppointments.time %></p>
     <% } %>
+
+    <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')){ %>
+    <a href="/properties/<%= prop._id %>"><button>Please Leave a Review</button></a>
+    <% }else{ %>
     <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
+    <% } %>
+
     <% } %>
   </fieldset>
 

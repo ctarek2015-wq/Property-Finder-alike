@@ -44,7 +44,7 @@
     <p>Time Slots: <%= prop.availableAppointments.time %></p>
     <% } %>
 
-    <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')){ %>
+    <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>
     <a href="/properties/<%= prop._id %>"><button>Please Leave a Review</button></a>
     <% }else{ %>
     <a href="/properties/<%= prop._id %>"><button>View Property</button></a>

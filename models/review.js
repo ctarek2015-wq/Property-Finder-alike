@@ -17,6 +17,10 @@ const reviewSchema = new mongoose.Schema({
   comment: {
     type: String,
   },
+  reviewed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Review = mongoose.model("Review", reviewSchema);

@@ -52,20 +52,28 @@
 
   <fieldset>
     <legend>Reviews:</legend>
+    <% console.log(propReviews); %>
     <% if(propReviews.length > 0){ %>
     <% propReviews.forEach(review => { %>
+
     <p>Rating: <%= review.rating %></p>
     <p>Comment: <%= review.comment %></p>
+
+    <% if(review.reviewerId.toString() === user._id.toString()){ %>
+    <a href="/reviews/<%= review._id %>/edit"><button>Edit Review</button></a>
+    <form action="/reviews/<%= review._id %>?_method=DELETE&propertyId=<%= property._id %>" method="post"><button>Delete Review</button></form>
+    <% } %>
+
     <% }) %>
     <% }else{ %>
     <p>No reviews yet.</p>
     <% } %>
   </fieldset>
 
-  <% if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'completed')){ %>
+  <% if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'completed') && !propReviews.some(review => review.reviewerId.toString() === user._id.toString())){ %>
   <fieldset>
     <legend>Leave a Review:</legend>
-    <form action="/reviews?reviewerId=<%= user._id %>&propertyId=<%= property._id %>" method="post">
+    <form action="/reviews?propertyId=<%= property._id %>" method="post">
       <select name="rating" id="rating" required>
         <option value="">Select Rating</option>
         <option value="1">1</option>

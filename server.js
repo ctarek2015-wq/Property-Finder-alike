@@ -5,6 +5,8 @@ require("./config/database");
 const path = require("path");
 const express = require("express");
 const app = express();
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 const session = require("express-session");
 const { MongoStore } = require("connect-mongo");
 const methodOverride = require("method-override");

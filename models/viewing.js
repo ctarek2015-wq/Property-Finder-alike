@@ -37,6 +37,10 @@ const viewingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  ownerId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Viewing = mongoose.model("Viewing", viewingSchema);

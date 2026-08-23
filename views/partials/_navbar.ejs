@@ -4,12 +4,13 @@
   <% if(user.role === 'owner'){ %>
   <a href="/properties/new">List New Property</a>
   <a href="/properties">View Listed Properties</a>
+  <a href="/appointments">View Appointments</a>
   <% }%>
   <% if(user.role === 'seeker'){ %>
   <a href="/appointments">View Appointments</a>
   <% }%>
 
-  <p>You are logged in as a "<%= user.role %>" user!</p>
+  <p>"<%= user.role %>" account!</p>
   <a href="/auth/sign-out">Sign Out</a>
   <% }else{ %>
   <a href="/auth/sign-up">Sign Up</a>

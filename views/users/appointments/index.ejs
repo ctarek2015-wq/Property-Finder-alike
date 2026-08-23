@@ -15,25 +15,38 @@
 
   <% if(viewings.length === 0){ %>
   <p>You have no appointments scheduled.</p>
-  <% } %>
+  <% }else{ %>
 
-  <% if(user.role === 'seeker'){ %>
-  <% viewings.forEach(viewing => { %>
+  <% viewings.forEach(viewing => { 
+    if(viewing.viewerId._id.toString() === user._id || viewing.ownerId._id.toString() === user._id){ %>
+
   <fieldset>
+
     <legend>Viewing for <%= viewing.propertyId.title %></legend>
+
     <p>Appointment Date: <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
     <p>Appointment Time: <%= viewing.appointmentTime %></p>
     <p>Status: <%= viewing.status %></p>
-    <p>Property Owner: <%= viewing.propertyId.owner.username %></p>
+
+    <% if(user.role === 'seeker'){ %>
+
+    <p>Property Owner: <%= viewing.ownerId.username %></p>
     <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
     <a href="/appointments/<%= viewing._id %>/edit"><button>Edit Appointment</button></a>
+    <% }else{ %>
+
+    <p>Property Seeker: <%= viewing.viewerId.username %></p>
+    <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
+    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=confirmed" method="POST">
+      <button type="submit">Confirm Appointment</button>
+    </form>
+    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=cancelled" method="POST">
+      <button type="submit">Cancel Appointment</button>
+    </form>
+
+    <% } %>
   </fieldset>
-  <% }) %>
-  <% } %>
-
-
-
-
+  <% } })} %>
 
 </body>
 

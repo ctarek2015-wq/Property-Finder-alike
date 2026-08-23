@@ -3,16 +3,10 @@ const Property = require("../models/property");
 
 const index = async (req, res) => {
   try {
-    const viewings = await Viewing.find({
-      viewerId: req.session.user._id,
-    }).populate({
-      path: "propertyId",
-      select: "owner title",
-      populate: {
-        path: "owner",
-        select: "username",
-      },
-    });
+    const viewings = await Viewing.find()
+      .populate("propertyId", "title")
+      .populate("ownerId", "username")
+      .populate("viewerId", "username");
     res.render("users/appointments/index.ejs", { viewings });
   } catch (err) {
     console.error(err.message);
@@ -39,9 +33,11 @@ const newAppointment = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    const prop = await Property.findById(req.query.propertyId);
     const newViewing = new Viewing(req.body);
     newViewing.viewerId = req.session.user._id;
     newViewing.propertyId = req.query.propertyId;
+    newViewing.ownerId = prop.owner._id;
     await newViewing.save();
     res.redirect(`/appointments`);
   } catch (err) {

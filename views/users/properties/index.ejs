@@ -21,30 +21,36 @@
 
   <% owned.forEach(prop=>{ %>
 
-  <fieldset>
-    <legend><%= prop.title %></legend>
-    <p>Owner: <%= prop.owner.username %></p>
-    <p>Description: <%= prop.description %></p>
-    <p>Location: <%= prop.location %></p>
-    <p>Property Type: <%= prop.listingType %></p>
-    <p>Price: <%= prop.price %></p>
-    <p>Area: <%= prop.area %></p>
-    <p>Bedrooms: <%= prop.bedrooms %></p>
-    <p>Bathrooms: <%= prop.bathrooms %></p>
-    <% if(prop.available === true){ %>
-    <p>Available for viewings</p>
-    <% }else{ %>
-    <p>Not Available for viewings</p>
-    <% } %>
-    <% if(prop.availableAppointments){ %>
-    <p>From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-    <p>To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-    <p>Time Slots: <%= prop.availableAppointments.time %></p>
-    <% } %>
-    <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
+  <div class="properties-list" id="properties-list">
+    <div class="property-card">
+      <h3 class="legend"><%= prop.title %></h3>
+      <div class="property-details">
+        <p class="detail-item">Owner: <%= prop.owner.username %></p>
+        <p class="detail-item">Description: <%= prop.description %></p>
+        <p class="detail-item">Location: <%= prop.location %></p>
+        <p class="detail-item">Property Type: <%= prop.listingType %></p>
+        <p class="detail-item">Price: <%= prop.price %></p>
+        <p class="detail-item">Area: <%= prop.area %></p>
+        <p class="detail-item">Bedrooms: <%= prop.bedrooms %></p>
+        <p class="detail-item">Bathrooms: <%= prop.bathrooms %></p>
+        <% if(prop.available === true){ %>
+        <p class="detail-item">Available for viewings</p>
+        <% }else{ %>
+        <p class="detail-item">Not Available for viewings</p>
+        <% } %>
+        <% if(prop.availableAppointments){ %>
+        <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+        <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+        <p class="detail-item">Time Slots: <%= prop.availableAppointments.time %></p>
+        <% } %>
+      </div>
+      <div class="property-actions">
+        <a href="/properties/<%= prop._id %>"><button class="btn">View Property</button></a>
+      </div>
+    </div>
 
-  </fieldset>
-  <% }) %>
+    <% }) %>
+  </div>
 
 </body>
 

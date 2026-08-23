@@ -13,32 +13,32 @@
 <body>
   <h1>Welcome <%= user.username %></h1>
 
-  <form action="/appointments?propertyId=<%= prop._id %>" method="post">
+  <form action="/appointments?propertyId=<%= prop._id %>" method="post" id="appointment-form" class="appointment-form">
 
-    <fieldset>
-      <legend>New Appointment:</legend>
+    <div class="form-section">
+      <h3 class="legend">New Appointment:</h3>
 
+      <div class="form-group">
+        <label for="appointmentDate">Appointment Date:</label>
+        <select name="appointmentDate" id="appointmentDate" required>
+          <option value="">--Please choose an option--</option>
+          <% availableDates.forEach(date => { %>
+          <option value="<%= date %>"><%= date %></option>
+          <% }); %>
+        </select>
+      </div>
 
-      <label for="appointmentDate">Appointment Date:</label>
-      <select name="appointmentDate" id="appointmentDate" required>
-        <option value="">--Please choose an option--</option>
-        <% availableDates.forEach(date => { %>
-        <option value="<%= date %>"><%= date %></option>
-        <% }); %>
-      </select>
-
-
-      <label for="appointmentTime">Appointment Time:</label>
-      <select name="appointmentTime" id="appointmentTime" required>
-        <option value="">--Please choose an option--</option>
-        <% time.forEach(time => { %>
-        <option value="<%= time %>"><%= time %></option>
-        <% }); %>
-      </select>
-
-
-    </fieldset>
-    <button type="submit">Submit Property</button>
+      <div class="form-group">
+        <label for="appointmentTime">Appointment Time:</label>
+        <select name="appointmentTime" id="appointmentTime" required>
+          <option value="">--Please choose an option--</option>
+          <% time.forEach(time => { %>
+          <option value="<%= time %>"><%= time %></option>
+          <% }); %>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-submit">Submit Property</button>
   </form>
 
 

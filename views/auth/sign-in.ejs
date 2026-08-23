@@ -11,25 +11,34 @@
 
 <body>
   <h1>Sign in to your account!</h1>
-  <form action="/auth/sign-in" method="POST">
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required />
+  <form action="/auth/sign-in" method="POST" id="sign-in-form" class="auth-form">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" name="email" id="email" required />
+    </div>
 
-    <fieldset>
-      <legend>Role:</legend>
+    <div class="form-section role-section">
+      <h3 class="legend">Role:</h3>
 
-      <input type="radio" value="seeker" id="seeker" name="role" checked />
-      <label for="seeker">seeker</label>
+      <div class="radio-group">
+        <div class="form-group radio-option">
+          <input type="radio" value="seeker" id="seeker" name="role" checked />
+          <label for="seeker">seeker</label>
+        </div>
 
-      <input type="radio" value="owner" id="owner" name="role" />
-      <label for="owner">owner</label>
+        <div class="form-group radio-option">
+          <input type="radio" value="owner" id="owner" name="role" />
+          <label for="owner">owner</label>
+        </div>
+      </div>
+    </div>
 
-    </fieldset>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+    </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
-
-    <button type="submit">Sign in</button>
+    <button type="submit" class="btn btn-submit">Sign in</button>
   </form>
 </body>
 

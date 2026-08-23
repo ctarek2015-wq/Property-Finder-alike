@@ -19,43 +19,48 @@
 
   <% properties.forEach(prop=> {if(prop.available === true){ %>
 
-  <fieldset>
-    <legend><%= prop.title %></legend>
-    <p>Owner: <%= prop.owner.username %></p>
-    <p>Description: <%= prop.description %></p>
-    <p>Location: <%= prop.location %></p>
-    <p>Property Type: <%= prop.listingType %></p>
-    <p>Price: <%= prop.price %></p>
-    <p>Area: <%= prop.area %></p>
-    <p>Bedrooms: <%= prop.bedrooms %></p>
-    <p>Bathrooms: <%= prop.bathrooms %></p>
+  <div class="property-listings" id="property-listings">
+    <div class="property-card">
+      <h3 class="legend"><%= prop.title %></h3>
+      <div class="property-details">
+        <p class="detail-item">Owner: <%= prop.owner.username %></p>
+        <p class="detail-item">Description: <%= prop.description %></p>
+        <p class="detail-item">Location: <%= prop.location %></p>
+        <p class="detail-item">Property Type: <%= prop.listingType %></p>
+        <p class="detail-item">Price: <%= prop.price %></p>
+        <p class="detail-item">Area: <%= prop.area %></p>
+        <p class="detail-item">Bedrooms: <%= prop.bedrooms %></p>
+        <p class="detail-item">Bathrooms: <%= prop.bathrooms %></p>
+      </div>
 
-    <% if(!user){ %>
-    <a href="/auth/sign-in"> <button>Please log in to view properties</button></a>
-    <% }else{ %>
-    <% if(prop.available === true){ %>
-    <p>Available for viewings</p>
-    <% }else{ %>
-    <p>Not Available for viewings</p>
-    <% } %>
-    <% if(prop.availableAppointments){ %>
-    <p>From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-    <p>To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-    <p>Time Slots: <%= prop.availableAppointments.time %></p>
-    <% } %>
+      <div class="property-actions">
+        <% if(!user){ %>
+        <a href="/auth/sign-in"> <button class="btn">Please log in to view properties</button></a>
+        <% }else{ %>
+        <% if(prop.available === true){ %>
+        <p class="detail-item">Available for viewings</p>
+        <% }else{ %>
+        <p class="detail-item">Not Available for viewings</p>
+        <% } %>
+        <% if(prop.availableAppointments){ %>
+        <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+        <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+        <p class="detail-item">Time Slots: <%= prop.availableAppointments.time %></p>
+        <% } %>
 
-    <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>
-    <a href="/properties/<%= prop._id %>"><button>Please Leave a Review</button></a>
-    <% }else{ %>
-    <a href="/properties/<%= prop._id %>"><button>View Property</button></a>
-    <% } %>
+        <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>
+        <a href="/properties/<%= prop._id %>"><button class="btn">Please Leave a Review</button></a>
+        <% }else{ %>
+        <a href="/properties/<%= prop._id %>"><button class="btn">View Property</button></a>
+        <% } %>
 
-    <% } %>
-  </fieldset>
+        <% } %>
+      </div>
+    </div>
 
 
-  <% }}) %>
-
+    <% }}) %>
+  </div>
 
 </body>
 

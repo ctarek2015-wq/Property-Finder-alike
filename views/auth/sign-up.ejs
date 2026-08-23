@@ -11,32 +11,44 @@
 
 <body>
   <h1>Create a new account!</h1>
-  <form action="/auth/sign-up" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required />
+  <form action="/auth/sign-up" method="POST" id="sign-up-form" class="auth-form">
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" name="username" id="username" required />
+    </div>
 
-    <label for="email">email:</label>
-    <input type="email" name="email" id="email" required />
+    <div class="form-group">
+      <label for="email">email:</label>
+      <input type="email" name="email" id="email" required />
+    </div>
 
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" required />
+    </div>
 
-    <label for="confirmPassword">Confirm Password:</label>
-    <input type="password" name="confirmPassword" id="confirmPassword" required />
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" name="confirmPassword" id="confirmPassword" required />
+    </div>
 
-    <fieldset>
-      <legend>Role:</legend>
+    <div class="form-section role-section">
+      <h3 class="legend">Role:</h3>
 
-      <input type="radio" value="seeker" id="seeker" name="role" checked />
-      <label for="seeker">seeker</label>
+      <div class="radio-group">
+        <div class="form-group radio-option">
+          <input type="radio" value="seeker" id="seeker" name="role" checked />
+          <label for="seeker">seeker</label>
+        </div>
 
-      <input type="radio" value="owner" id="owner" name="role" />
-      <label for="owner">owner</label>
+        <div class="form-group radio-option">
+          <input type="radio" value="owner" id="owner" name="role" />
+          <label for="owner">owner</label>
+        </div>
+      </div>
+    </div>
 
-    </fieldset>
-
-
-    <button type="submit">Sign up</button>
+    <button type="submit" class="btn btn-submit">Sign up</button>
   </form>
 </body>
 

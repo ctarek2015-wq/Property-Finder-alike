@@ -12,83 +12,99 @@
 <body>
   <h1><%= property.title %></h1>
 
-  <fieldset>
-    <p>Owner: <%= property.owner.username %></p>
-    <p>Description: <%= property.description %></p>
-    <p>Location: <%= property.location %></p>
-    <p>Property Type: <%= property.listingType %></p>
-    <p>Price: <%= property.price %></p>
-    <p>Area: <%= property.area %></p>
-    <p>Bedrooms: <%= property.bedrooms %></p>
-    <p>Bathrooms: <%= property.bathrooms %></p>
+  <div id="property-info" class="property-info-section">
+    <div class="property-details">
+      <p class="detail-item">Owner: <%= property.owner.username %></p>
+      <p class="detail-item">Description: <%= property.description %></p>
+      <p class="detail-item">Location: <%= property.location %></p>
+      <p class="detail-item">Property Type: <%= property.listingType %></p>
+      <p class="detail-item">Price: <%= property.price %></p>
+      <p class="detail-item">Area: <%= property.area %></p>
+      <p class="detail-item">Bedrooms: <%= property.bedrooms %></p>
+      <p class="detail-item">Bathrooms: <%= property.bathrooms %></p>
+    </div>
 
-    <fieldset>
-      <legend>Property Images:</legend>
-      <img src="<%= property.images %>" alt="">
-    </fieldset>
+    <div class="form-subsection property-images-section">
+      <h4 class="legend">Property Images:</h4>
+      <img class="property-image" src="<%= property.images %>" alt="">
+    </div>
 
-    <% if(property.available === true){ %>
-    <p>Available for viewings</p>
-    <% }else{ %>
-    <p>Not Available for viewings</p>
-    <% } %>
-    <% if(property.availableAppointments){ %>
-    <p>From: <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-    <p>To: <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-    <p>Time Slots: <%= property.availableAppointments.time %></p>
-    <% } %>
+    <div class="property-details">
+      <% if(property.available === true){ %>
+      <p class="detail-item">Available for viewings</p>
+      <% }else{ %>
+      <p class="detail-item">Not Available for viewings</p>
+      <% } %>
+      <% if(property.availableAppointments){ %>
+      <p class="detail-item">From: <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+      <p class="detail-item">To: <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+      <p class="detail-item">Time Slots: <%= property.availableAppointments.time %></p>
+      <% } %>
+    </div>
 
-    <% if(user._id === property.owner._id.toString()){ %>
-    <a href="/properties/<%= property._id %>/edit"><button>Edit Property</button></a>
-    <form action="/properties/<%= property._id %>?_method=DELETE" method="post"><button>Delete Property</button></form>
-    <% } %>
+    <div class="property-actions">
+      <% if(user._id === property.owner._id.toString()){ %>
+      <a href="/properties/<%= property._id %>/edit"><button class="btn btn-edit">Edit Property</button></a>
+      <form action="/properties/<%= property._id %>?_method=DELETE" method="post" class="delete-form"><button class="btn btn-delete">Delete Property</button></form>
+      <% } %>
 
-    <%  if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'confirmed' || viewing.status.toString() === 'pending')){ %>
-    <a href="/appointments"><button>You have booked an appointment for this property</button></a>
-    <%}else if(user.role === 'seeker'){ %>
-    <a href="/appointments/new?propertyId=<%= property._id %>"><button>Book an Appointment</button></a>
-    <% } %>
-  </fieldset>
+      <%  if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'confirmed' || viewing.status.toString() === 'pending')){ %>
+      <a href="/appointments"><button class="btn">You have booked an appointment for this property</button></a>
+      <%}else if(user.role === 'seeker'){ %>
+      <a href="/appointments/new?propertyId=<%= property._id %>"><button class="btn">Book an Appointment</button></a>
+      <% } %>
+    </div>
+  </div>
 
-  <fieldset>
-    <legend>Reviews:</legend>
+  <div id="reviews-section" class="reviews-section">
+    <h3 class="legend">Reviews:</h3>
     <% console.log(propReviews); %>
     <% if(propReviews.length > 0){ %>
-    <% propReviews.forEach(review => { %>
+    <div class="reviews-list">
+      <% propReviews.forEach(review => { %>
 
-    <p>Rating: <%= review.rating %></p>
-    <p>Comment: <%= review.comment %></p>
+      <div class="review-card">
+        <p class="detail-item">Rating: <%= review.rating %></p>
+        <p class="detail-item">Comment: <%= review.comment %></p>
 
-    <% if(review.reviewerId.toString() === user._id.toString()){ %>
-    <a href="/reviews/<%= review._id %>/edit"><button>Edit Review</button></a>
-    <form action="/reviews/<%= review._id %>?_method=DELETE&propertyId=<%= property._id %>" method="post"><button>Delete Review</button></form>
-    <% } %>
+        <% if(review.reviewerId.toString() === user._id.toString()){ %>
+        <div class="review-actions">
+          <a href="/reviews/<%= review._id %>/edit"><button class="btn btn-edit">Edit Review</button></a>
+          <form action="/reviews/<%= review._id %>?_method=DELETE&propertyId=<%= property._id %>" method="post" class="delete-form"><button class="btn btn-delete">Delete Review</button></form>
+        </div>
+        <% } %>
+      </div>
 
-    <% }) %>
+      <% }) %>
+    </div>
     <% }else{ %>
     <p>No reviews yet.</p>
     <% } %>
-  </fieldset>
+  </div>
 
   <% if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'completed') && !propReviews.some(review => review.reviewerId.toString() === user._id.toString())){ %>
-  <fieldset>
-    <legend>Leave a Review:</legend>
-    <form action="/reviews?propertyId=<%= property._id %>" method="post">
-      <select name="rating" id="rating" required>
-        <option value="">Select Rating</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+  <div id="leave-review-section" class="review-form-section">
+    <h3 class="legend">Leave a Review:</h3>
+    <form action="/reviews?propertyId=<%= property._id %>" method="post" class="review-form">
+      <div class="form-group">
+        <select name="rating" id="rating" required>
+          <option value="">Select Rating</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
 
-      <label for="comment">Comment:</label>
-      <textarea id="comment" name="comment"></textarea>
+      <div class="form-group">
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment"></textarea>
+      </div>
 
-      <button type="submit">Submit Review</button>
+      <button type="submit" class="btn btn-submit">Submit Review</button>
     </form>
-  </fieldset>
+  </div>
   <% } %>
 
 

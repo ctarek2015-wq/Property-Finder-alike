@@ -17,51 +17,62 @@
   <p>You have no appointments scheduled.</p>
   <% }else{ %>
 
-  <% viewings.forEach(viewing => { 
+  <div id="appointments-list" class="appointments-list">
+    <% viewings.forEach(viewing => { 
     if(viewing.viewerId._id.toString() === user._id || viewing.ownerId._id.toString() === user._id){ %>
 
-  <fieldset>
+    <div class="appointment-card">
 
-    <legend>Viewing for <%= viewing.propertyId.title %></legend>
+      <h3 class="legend">Viewing for <%= viewing.propertyId.title %></h3>
 
-    <p>Appointment Date: <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
-    <p>Appointment Time: <%= viewing.appointmentTime %></p>
+      <div class="appointment-details">
+        <p class="detail-item">Appointment Date: <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
+        <p class="detail-item">Appointment Time: <%= viewing.appointmentTime %></p>
 
-    <% if(user.role === 'seeker'){ %>
+        <% if(user.role === 'seeker'){ %>
 
-    <p>Property Owner: <%= viewing.ownerId.username %></p>
-    <p>Status: <%= viewing.status %></p>
-    <% if(viewing.status === 'completed' && userReviews.some(review => review.propertyId.toString() === viewing.propertyId._id.toString() && !review.reviewed)){ %>
-    <a href="/properties/<%= viewing.propertyId._id %>"><button>Please Leave a Review</button></a>
-    <% }else{ %>
-    <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
-    <% } %>
-    <% if(viewing.status === 'pending'){ %>
-    <a href="/appointments/<%= viewing._id %>/edit"><button>Edit Appointment</button></a>
-    <% }}else{ %>
+        <p class="detail-item">Property Owner: <%= viewing.ownerId.username %></p>
+        <p class="detail-item">Status: <%= viewing.status %></p>
+        <% } else { %>
+        <p class="detail-item">Property Seeker: <%= viewing.viewerId.username %></p>
+        <p class="detail-item">Status: <%= viewing.status %></p>
+        <% } %>
+      </div>
 
-    <p>Property Seeker: <%= viewing.viewerId.username %></p>
-    <p>Status: <%= viewing.status %></p>
-    <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
-    <% if(viewing.status.toString() === 'pending'){ %>
-    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=confirmed" method="POST">
-      <button type="submit">Confirm Appointment</button>
-    </form>
-    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=cancelled" method="POST">
-      <button type="submit">Cancel Appointment</button>
-    </form>
-    <% }%>
-    <% if(viewing.status.toString() === 'confirmed'){ %>
-    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=completed" method="POST">
-      <button type="submit">Complete Appointment</button>
-    </form>
-    <form action="/appointments/<%= viewing._id %>?_method=PUT&status=cancelled" method="POST">
-      <button type="submit">Cancel Appointment</button>
-    </form>
-    <% }%>
-    <% } %>
-  </fieldset>
-  <% }})} %>
+      <div class="appointment-actions">
+        <% if(user.role === 'seeker'){ %>
+
+        <% if(viewing.status === 'completed' && userReviews.some(review => review.propertyId.toString() === viewing.propertyId._id.toString() && !review.reviewed)){ %>
+        <a href="/properties/<%= viewing.propertyId._id %>"><button class="btn">Please Leave a Review</button></a>
+        <% }else{ %>
+        <a href="/properties/<%= viewing.propertyId._id %>"><button class="btn">View Property</button></a>
+        <% } %>
+        <% if(viewing.status === 'pending'){ %>
+        <a href="/appointments/<%= viewing._id %>/edit"><button class="btn btn-edit">Edit Appointment</button></a>
+        <% }}else{ %>
+
+        <a href="/properties/<%= viewing.propertyId._id %>"><button class="btn">View Property</button></a>
+        <% if(viewing.status.toString() === 'pending'){ %>
+        <form action="/appointments/<%= viewing._id %>?_method=PUT&status=confirmed" method="POST" class="action-form">
+          <button type="submit" class="btn btn-confirm">Confirm Appointment</button>
+        </form>
+        <form action="/appointments/<%= viewing._id %>?_method=PUT&status=cancelled" method="POST" class="action-form">
+          <button type="submit" class="btn btn-cancel">Cancel Appointment</button>
+        </form>
+        <% }%>
+        <% if(viewing.status.toString() === 'confirmed'){ %>
+        <form action="/appointments/<%= viewing._id %>?_method=PUT&status=completed" method="POST" class="action-form">
+          <button type="submit" class="btn btn-complete">Complete Appointment</button>
+        </form>
+        <form action="/appointments/<%= viewing._id %>?_method=PUT&status=cancelled" method="POST" class="action-form">
+          <button type="submit" class="btn btn-cancel">Cancel Appointment</button>
+        </form>
+        <% }%>
+        <% } %>
+      </div>
+    </div>
+    <% }})} %>
+  </div>
 
 </body>
 

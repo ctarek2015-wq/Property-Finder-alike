@@ -26,10 +26,10 @@
     <p>Status: <%= viewing.status %></p>
     <p>Property Owner: <%= viewing.propertyId.owner.username %></p>
     <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>
-    <a href="/properties/<%= viewing.propertyId._id %>/appointments/<%= viewing._id %>/edit"><button>Edit Appointment</button></a>
+    <a href="/appointments/<%= viewing._id %>/edit"><button>Edit Appointment</button></a>
   </fieldset>
   <% }) %>
-  <% }else %>
+  <% } %>
 
 
 

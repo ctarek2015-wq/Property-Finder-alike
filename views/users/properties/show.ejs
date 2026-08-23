@@ -44,7 +44,7 @@
     <% } %>
 
     <% if(user.role === 'seeker'){ %>
-    <a href="/properties/<%= property._id %>/appointments/new"><button>Book an Appointment</button></a>
+    <a href="/appointments/new?propertyId=<%= property._id %>"><button>Book an Appointment</button></a>
     <% } %>
   </fieldset>
 

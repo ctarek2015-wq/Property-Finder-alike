@@ -22,7 +22,7 @@ const addUserToViews = require("./middlewares/addUserToViews");
 const addPropToViews = require("./middlewares/addPropToViews");
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "./public/stylesheets")));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 app.use(
   session({

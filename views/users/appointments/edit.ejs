@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Edit Appointment</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 
 </head>
-<%- include('../../partials/_navbar.ejs') %>
 
-<body>
+<body class="page page-appointments">
+  <%- include('../../partials/_navbar.ejs') %>
   <h1>Welcome <%= user.username %></h1>
 
   <form action="/appointments/<%= viewing._id %>?_method=PUT" method="post" id="appointment-form" class="appointment-form">
@@ -29,13 +29,15 @@
       </div>
 
       <div class="form-group">
-        <label for="appointmentTime">Appointment Time:</label>
-        <select name="appointmentTime" id="appointmentTime" required>
-          <option value="">--Please choose an option--</option>
-          <% time.forEach(time => { %>
-          <option value="<%= time %>" <%= viewing.appointmentTime === time ? 'selected' : '' %>><%= time %></option>
+        <p class="legend">Appointment Time:</p>
+        <div class="time-slot-picker" id="appointmentTime">
+          <% time.forEach((slot, idx) => { %>
+          <div class="time-slot-option">
+            <input type="radio" name="appointmentTime" value="<%= slot %>" id="appointment-time-<%= idx %>" <%= viewing.appointmentTime === slot ? 'checked' : '' %> required>
+            <label for="appointment-time-<%= idx %>"><%= slot %></label>
+          </div>
           <% }); %>
-        </select>
+        </div>
       </div>
     </div>
     <button type="submit" class="btn btn-submit">Submit Property</button>

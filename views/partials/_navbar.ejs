@@ -1,20 +1,30 @@
-<nav>
-  <a href="/">Home Page</a>
-  <% if(user){ %>
-  <% if(user.role === 'owner'){ %>
-  <a href="/properties/new">List New Property</a>
-  <a href="/properties">View Listed Properties</a>
-  <a href="/appointments">View Appointments</a>
-  <% }%>
-  <% if(user.role === 'seeker'){ %>
-  <a href="/appointments">View Appointments</a>
-  <% }%>
+<nav class="site-nav" aria-label="Global navigation">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/">PropertyFinder</a>
 
-  <p>"<%= user.role %>" account!</p>
-  <a href="/auth/sign-out">Sign Out</a>
-  <% }else{ %>
-  <a href="/auth/sign-up">Sign Up</a>
-  <a href="/auth/sign-in">Sign In</a>
-  <% } %>
+    <input class="nav-menu-toggle" type="checkbox" id="nav-menu-toggle" />
+    <label class="nav-toggle" for="nav-menu-toggle" aria-label="Toggle navigation menu">
+      <span class="icon-open" aria-hidden="true">☰</span>
+      <span class="icon-close" aria-hidden="true">×</span>
+    </label>
 
+    <div class="nav-links">
+      <% if (user) { %>
+      <% if (user.role === 'owner') { %>
+      <a href="/properties/new">List Property</a>
+      <a href="/properties">My Listings</a>
+      <a href="/appointments">Appointments</a>
+      <% } %>
+      <% if (user.role === 'seeker') { %>
+      <a href="/appointments">My Viewings</a>
+      <% } %>
+
+      <span class="nav-role"><%= user.role %> account</span>
+      <a href="/auth/sign-out">Sign Out</a>
+      <% } else { %>
+      <a href="/auth/sign-up">Sign Up</a>
+      <a href="/auth/sign-in">Sign In</a>
+      <% } %>
+    </div>
+  </div>
 </nav>

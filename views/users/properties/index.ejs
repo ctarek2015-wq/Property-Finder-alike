@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>My Properties</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 </head>
-<%- include('../../partials/_navbar.ejs') %>
 
-<body>
+<body class="page page-properties">
+  <%- include('../../partials/_navbar.ejs') %>
   <h1>Welcome <%= user.username %></h1>
 
   <a href="/properties/new"><button>Add New Property</button></a>
@@ -41,7 +41,15 @@
         <% if(prop.availableAppointments){ %>
         <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
         <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-        <p class="detail-item">Time Slots: <%= prop.availableAppointments.time %></p>
+        <div class="time-slots-block">
+          <p class="detail-item">Time Slots:</p>
+          <div class="time-slot-list">
+            <% const ownerSlots = Array.isArray(prop.availableAppointments.time) ? prop.availableAppointments.time : [prop.availableAppointments.time]; %>
+            <% ownerSlots.forEach(slot => { %>
+            <span class="time-slot-chip"><%= slot %></span>
+            <% }) %>
+          </div>
+        </div>
         <% } %>
       </div>
       <div class="property-actions">

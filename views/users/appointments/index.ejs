@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Appointments</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 </head>
-<%- include('../../partials/_navbar.ejs') %>
 
-<body>
+<body class="page page-appointments">
+  <%- include('../../partials/_navbar.ejs') %>
   <h1>Welcome <%= user.username %></h1>
   <h2>Your Appointments:</h2>
 
@@ -27,7 +27,12 @@
 
       <div class="appointment-details">
         <p class="detail-item">Appointment Date: <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
-        <p class="detail-item">Appointment Time: <%= viewing.appointmentTime %></p>
+        <div class="time-slots-inline">
+          <p class="detail-item">Appointment Time:</p>
+          <div class="time-slot-list">
+            <span class="time-slot-chip"><%= viewing.appointmentTime %></span>
+          </div>
+        </div>
 
         <% if(user.role === 'seeker'){ %>
 

@@ -5,12 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home Page</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 
 </head>
-<%- include('./partials/_navbar') %>
 
-<body>
+<body class="page page-home">
+  <%- include('./partials/_navbar') %>
   <% if(user){ %>
   <h1>Welcome <%= user.username %></h1>
   <% }else{ %>
@@ -45,7 +45,15 @@
         <% if(prop.availableAppointments){ %>
         <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
         <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-        <p class="detail-item">Time Slots: <%= prop.availableAppointments.time %></p>
+        <div class="time-slots-block">
+          <p class="detail-item">Time Slots:</p>
+          <div class="time-slot-list">
+            <% const homeSlots = Array.isArray(prop.availableAppointments.time) ? prop.availableAppointments.time : [prop.availableAppointments.time]; %>
+            <% homeSlots.forEach(slot => { %>
+            <span class="time-slot-chip"><%= slot %></span>
+            <% }) %>
+          </div>
+        </div>
         <% } %>
 
         <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>

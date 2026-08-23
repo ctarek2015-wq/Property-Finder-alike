@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>New Property</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 
 </head>
-<%- include('../../partials/_navbar.ejs') %>
 
-<body>
+<body class="page page-properties">
+  <%- include('../../partials/_navbar.ejs') %>
   <h1>Welcome <%= user.username %></h1>
 
   <form action="/properties" method="post" id="property-form" class="property-form">
@@ -115,9 +115,9 @@
 
         <div class="form-subsection time-slots-section">
           <h5 class="legend">Time Slots:</h5>
-          <div class="checkbox-group">
+          <div class="checkbox-group time-slot-picker">
             <% timeSlots.forEach(time => { %>
-            <div class="form-group checkbox-option">
+            <div class="checkbox-option time-slot-option">
               <input type="checkbox" name="time" value="<%= time %>" id="<%= time %>">
               <label for="<%= time %>"><%= time %></label>
             </div>

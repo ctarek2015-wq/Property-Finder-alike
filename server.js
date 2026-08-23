@@ -51,6 +51,10 @@ app.use("/appointments", appointmentRouter);
 app.use("/reviews", reviewRouter);
 
 //port listening
-app.listen(port, () => {
-  console.log(`The express app is ready on port ${port}!`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(port, () => {
+    console.log(`The express app is ready on port ${port}!`);
+  });
+}
+
+module.exports = app;

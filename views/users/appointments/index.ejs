@@ -31,7 +31,7 @@
 
     <p>Property Owner: <%= viewing.ownerId.username %></p>
     <p>Status: <%= viewing.status %></p>
-    <% if(viewing.status === 'completed'){ %>
+    <% if(viewing.status === 'completed' && userReviews.some(review => review.propertyId.toString() === viewing.propertyId._id.toString() && !review.reviewed)){ %>
     <a href="/properties/<%= viewing.propertyId._id %>"><button>Please Leave a Review</button></a>
     <% }else{ %>
     <a href="/properties/<%= viewing.propertyId._id %>"><button>View Property</button></a>

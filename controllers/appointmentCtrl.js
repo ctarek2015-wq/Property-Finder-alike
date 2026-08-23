@@ -1,5 +1,6 @@
 const Viewing = require("../models/viewing");
 const Property = require("../models/property");
+const Review = require("../models/review");
 
 const index = async (req, res) => {
   try {
@@ -7,7 +8,8 @@ const index = async (req, res) => {
       .populate("propertyId", "title")
       .populate("ownerId", "username")
       .populate("viewerId", "username");
-    res.render("users/appointments/index.ejs", { viewings });
+    const userReviews = await Review.find({ reviewerId: req.session.user._id });
+    res.render("users/appointments/index.ejs", { viewings, userReviews });
   } catch (err) {
     console.error(err.message);
   }

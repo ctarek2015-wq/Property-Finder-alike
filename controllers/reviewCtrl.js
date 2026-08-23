@@ -14,9 +14,26 @@ const create = async (req, res) => {
   }
 };
 
-const edit = async (req, res) => {};
+const edit = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id);
+    res.render("users/reviews/edit.ejs", { review });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
-const update = async (req, res) => {};
+const update = async (req, res) => {
+  try {
+    console.log(req.body);
+    const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.redirect(`/properties/${req.query.propertyId}`);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 
 const deleteReview = async (req, res) => {
   try {

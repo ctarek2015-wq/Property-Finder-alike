@@ -28,13 +28,14 @@ const show = async (req, res) => {
   const property = await Property.findById(req.params.id)
     .populate("availableAppointments")
     .populate("owner", "username");
-  const seekerViewing = await Viewing.findOne({
+  const seekerViewings = await Viewing.find({
     viewerId: req.session.user._id,
     propertyId: req.params.id,
   });
+  console.log(seekerViewings);
   res.render("users/properties/show.ejs", {
     property,
-    seekerViewing,
+    seekerViewings,
   });
 };
 

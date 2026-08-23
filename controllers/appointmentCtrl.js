@@ -45,21 +45,10 @@ const create = async (req, res) => {
   }
 };
 
-// const show = (req, res) => {
-//   res.send("Appointment details");
-// };
-
 const edit = async (req, res) => {
   try {
-    const viewing = await Viewing.findById(req.params.id).populate({
-      path: "propertyId",
-      select: "owner title",
-      populate: {
-        path: "owner",
-        select: "username",
-      },
-    });
-    const prop = await Property.findById(viewing.propertyId).populate(
+    const viewing = await Viewing.findById(req.params.id);
+    const prop = await Property.findById(viewing.propertyId._id).populate(
       "availableAppointments",
     );
     const dateFrom = prop.availableAppointments.dateFrom;
@@ -85,6 +74,7 @@ const edit = async (req, res) => {
 
 const update = async (req, res) => {
   try {
+    req.body.status = req.query.status;
     const updateViewing = await Viewing.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -109,7 +99,6 @@ module.exports = {
   index,
   newAppointment,
   create,
-  // show,
   edit,
   update,
   deleteAppointment,

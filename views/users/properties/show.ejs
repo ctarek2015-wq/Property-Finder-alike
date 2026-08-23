@@ -43,10 +43,9 @@
     <form action="/properties/<%= property._id %>?_method=DELETE" method="post"><button>Delete Property</button></form>
     <% } %>
 
-
-    <% if(seekerViewing && user._id === seekerViewing.viewerId.toString()){ %>
+    <%  if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'confirmed' || viewing.status.toString() === 'pending')){ %>
     <a href="/appointments"><button>You have booked an appointment for this property</button></a>
-    <% }else if(user.role === 'seeker'){ %>
+    <%}else if(user.role === 'seeker'){ %>
     <a href="/appointments/new?propertyId=<%= property._id %>"><button>Book an Appointment</button></a>
     <% } %>
   </fieldset>

@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <title>Property Details</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
 </head>
-<%- include('../../partials/_navbar.ejs') %>
 
-<body>
+<body class="page page-properties">
+  <%- include('../../partials/_navbar.ejs') %>
   <h1><%= property.title %></h1>
 
   <div id="property-info" class="property-info-section">
@@ -38,7 +38,15 @@
       <% if(property.availableAppointments){ %>
       <p class="detail-item">From: <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
       <p class="detail-item">To: <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-      <p class="detail-item">Time Slots: <%= property.availableAppointments.time %></p>
+      <div class="time-slots-block">
+        <p class="detail-item">Time Slots:</p>
+        <div class="time-slot-list">
+          <% const detailSlots = Array.isArray(property.availableAppointments.time) ? property.availableAppointments.time : [property.availableAppointments.time]; %>
+          <% detailSlots.forEach(slot => { %>
+          <span class="time-slot-chip"><%= slot %></span>
+          <% }) %>
+        </div>
+      </div>
       <% } %>
     </div>
 

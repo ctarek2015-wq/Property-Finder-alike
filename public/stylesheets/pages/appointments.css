@@ -1,0 +1,7 @@
+.page-appointments .appointments-list {
+  margin-top: var(--space-4);
+}
+
+.page-appointments .action-form {
+  margin: 0;
+}

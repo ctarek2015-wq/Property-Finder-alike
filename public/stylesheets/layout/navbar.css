@@ -1,0 +1,131 @@
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: linear-gradient(135deg, var(--c-900), var(--c-700));
+  border-bottom: 1px solid rgba(202, 240, 248, 0.35);
+  box-shadow: var(--shadow-nav);
+  backdrop-filter: blur(4px);
+}
+
+.nav-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.nav-brand {
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(202, 240, 248, 0.42);
+  border-radius: var(--radius-sm);
+  background: rgba(202, 240, 248, 0.08);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.nav-menu-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.icon-close {
+  display: none;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.nav-links a,
+.nav-role {
+  color: #e9fbff;
+  font-size: 0.92rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 999px;
+}
+
+.nav-links a:hover {
+  background: rgba(202, 240, 248, 0.2);
+  color: #ffffff;
+}
+
+.nav-links a:focus-visible {
+  outline-color: rgba(202, 240, 248, 0.85);
+}
+
+.nav-role {
+  border: 1px solid rgba(202, 240, 248, 0.42);
+}
+
+@media (max-width: 720px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav-links {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition:
+      max-height 0.25s ease,
+      opacity 0.2s ease,
+      padding 0.2s ease;
+    padding-top: 0;
+  }
+
+  .nav-menu-toggle:checked ~ .nav-links {
+    max-height: 600px;
+    opacity: 1;
+    pointer-events: auto;
+    padding-top: var(--space-2);
+  }
+
+  .nav-menu-toggle:checked + .nav-toggle .icon-open {
+    display: none;
+  }
+
+  .nav-menu-toggle:checked + .nav-toggle .icon-close {
+    display: inline;
+  }
+
+  .nav-links a,
+  .nav-role {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: var(--radius-sm);
+  }
+}

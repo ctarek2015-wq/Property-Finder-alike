@@ -1,0 +1,34 @@
+.page-properties .properties-list,
+.page-properties .property-listings {
+  margin-top: var(--space-4);
+}
+
+.page-properties .property-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.page-properties .property-actions {
+  padding-top: var(--space-2);
+  border-top: 1px dashed var(--line);
+}
+
+@media (min-width: 900px) {
+  .page-properties .property-info-section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .page-properties .property-info-section > .property-details {
+    flex: 1 1 56%;
+    min-width: 280px;
+  }
+
+  .page-properties .property-images-section,
+  .page-properties .property-actions {
+    flex: 1 1 36%;
+    min-width: 280px;
+  }
+}

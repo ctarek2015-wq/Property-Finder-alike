@@ -1,0 +1,41 @@
+.property-card,
+.appointment-card,
+.review-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-4);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.property-card:hover,
+.appointment-card:hover,
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(3, 4, 94, 0.1);
+}
+
+.property-details,
+.appointment-details {
+  margin-top: var(--space-3);
+}
+
+.property-actions,
+.appointment-actions,
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.property-image {
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  object-fit: cover;
+}

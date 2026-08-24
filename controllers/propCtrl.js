@@ -15,7 +15,47 @@ const create = async (req, res) => {
   try {
     const newProp = await Property.create(req.body);
     const newAppointment = await Appointment.create(req.body);
+    const formData = req.body;
     newProp.owner = req.session.user._id;
+
+    if (newAppointment.price < 0) {
+      const errorPrice = "Price cannot be negative.";
+      return res.render("users/properties/new.ejs", { errorPrice, formData });
+    }
+
+    if (newAppointment.area < 0) {
+      const errorArea = "Area cannot be negative.";
+      return res.render("users/properties/new.ejs", { errorArea, formData });
+    }
+
+    if (newAppointment.bedrooms < 0) {
+      const errorBedrooms = "Number of bedrooms cannot be negative.";
+      return res.render("users/properties/new.ejs", {
+        errorBedrooms,
+        formData,
+      });
+    }
+
+    if (newAppointment.bathrooms < 0) {
+      const errorBathrooms = "Number of bathrooms cannot be negative.";
+      return res.render("users/properties/new.ejs", {
+        errorBathrooms,
+        formData,
+      });
+    }
+
+    if (newAppointment.dateFrom < new Date()) {
+      const errorDateFrom = "Start date cannot be in the past.";
+      return res.render("users/properties/new.ejs", {
+        errorDateFrom,
+        formData,
+      });
+    }
+
+    if (newAppointment.dateTo < newAppointment.dateFrom) {
+      const errorDateTo = "End date cannot be before start date.";
+      return res.render("users/properties/new.ejs", { errorDateTo, formData });
+    }
     newProp.availableAppointments = newAppointment._id;
     await newAppointment.save();
     await newProp.save();

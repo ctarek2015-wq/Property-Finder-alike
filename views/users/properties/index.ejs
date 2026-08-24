@@ -12,8 +12,6 @@
   <%- include('../../partials/_navbar.ejs') %>
   <h1>Welcome <%= user.username %></h1>
 
-  <a href="/properties/new"><button>Add New Property</button></a>
-
   <% const owned = properties.filter(prop=>prop.owner._id.toString() === user._id) %>
   <% if(owned.length === 0){ %>
   <p>You have no properties listed.</p>

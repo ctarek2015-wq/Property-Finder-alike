@@ -4,10 +4,12 @@ const propertySchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    maxlength: 100,
   },
   description: {
     type: String,
     required: true,
+    maxlength: 500,
   },
   listingType: {
     type: String,
@@ -17,6 +19,11 @@ const propertySchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
+    min: 0,
+    validate: {
+      validator: Number.isInteger,
+      message: "{VALUE} is not an integer value",
+    },
   },
   location: {
     type: String,
@@ -36,14 +43,29 @@ const propertySchema = new mongoose.Schema({
   area: {
     type: Number,
     required: true,
+    min: 0,
+    validate: {
+      validator: Number.isInteger,
+      message: "{VALUE} is not an integer value",
+    },
   },
   bedrooms: {
     type: Number,
     required: true,
+    min: 0,
+    validate: {
+      validator: Number.isInteger,
+      message: "{VALUE} is not an integer value",
+    },
   },
   bathrooms: {
     type: Number,
     required: true,
+    min: 0,
+    validate: {
+      validator: Number.isInteger,
+      message: "{VALUE} is not an integer value",
+    },
   },
   images: [
     {

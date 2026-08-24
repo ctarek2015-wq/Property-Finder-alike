@@ -5,8 +5,8 @@
 .page > h1,
 .page > h2 {
   max-width: var(--content-max);
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .property-listings,

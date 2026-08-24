@@ -11,6 +11,9 @@
 
 <body class="page page-properties">
   <%- include('../../partials/_navbar.ejs') %>
+
+  <%- include('../../partials/_errors.ejs') %>
+
   <h1>Welcome <%= user.username %></h1>
 
   <form action="/properties" method="post" id="property-form" class="property-form">
@@ -22,12 +25,12 @@
 
         <div class="form-group">
           <label for="title">Property Title:</label>
-          <input type="text" name="title" id="title" required>
+          <input type="text" name="title" id="title" value="<%= oldInput.title || '' %>" required>
         </div>
 
         <div class="form-group">
           <label for="description">Description:</label>
-          <textarea name="description" id="description"></textarea>
+          <textarea name="description" id="description"><%= oldInput.description || '' %></textarea>
         </div>
 
         <div class="form-group">
@@ -35,7 +38,7 @@
           <select name="location" id="location">
             <option value="">--Please choose an option--</option>
             <% locations.forEach(location => { %>
-            <option value="<%= location %>"><%= location %></option>
+            <option value="<%= location %>" <%= oldInput.location === location ? 'selected' : '' %>><%= location %></option>
             <% }); %>
           </select>
         </div>
@@ -45,11 +48,11 @@
 
           <div class="radio-group">
             <div class="form-group radio-option">
-              <input type="radio" name="listingType" id="rent" value="rent" checked>
+              <input type="radio" name="listingType" id="rent" value="rent" <%= oldInput.listingType === 'rent' ? 'checked' : '' %>>
               <label for="rent">Rent</label>
             </div>
             <div class="form-group radio-option">
-              <input type="radio" name="listingType" id="sale" value="sale">
+              <input type="radio" name="listingType" id="sale" value="sale" <%= oldInput.listingType === 'sale' ? 'checked' : '' %>>
               <label for="sale">Sale</label>
             </div>
           </div>
@@ -57,7 +60,7 @@
 
         <div class="form-group">
           <label for="price">Price:</label>
-          <input type="number" name="price" id="price" required>
+          <input type="number" name="price" id="price" value="<%= oldInput.price || '' %>" required>
         </div>
       </div>
 
@@ -66,17 +69,17 @@
 
         <div class="form-group">
           <label for="area">Area (in Square Meters):</label>
-          <input type="number" name="area" id="area" required>
+          <input type="number" name="area" id="area" value="<%= oldInput.area || '' %>" required>
         </div>
 
         <div class="form-group">
           <label for="bedrooms">Bedrooms:</label>
-          <input type="number" name="bedrooms" id="bedrooms" required>
+          <input type="number" name="bedrooms" id="bedrooms" value="<%= oldInput.bedrooms || '' %>" required>
         </div>
 
         <div class="form-group">
           <label for="bathrooms">Bathrooms:</label>
-          <input type="number" name="bathrooms" id="bathrooms" required>
+          <input type="number" name="bathrooms" id="bathrooms" value="<%= oldInput.bathrooms || '' %>" required>
         </div>
       </div>
 
@@ -85,7 +88,7 @@
 
         <div class="form-group">
           <label for="images">Paste URL here:</label>
-          <input type="text" name="images" id="images">
+          <input type="text" name="images" id="images" value="<%= oldInput.images || '' %>" required>
         </div>
       </div>
 
@@ -94,23 +97,23 @@
 
         <div class="radio-group">
           <div class="form-group radio-option">
-            <input type="radio" name="available" value="true" id="true" checked>
+            <input type="radio" name="available" value="true" id="true" <%= oldInput.available === 'true' ? 'checked' : '' %>>
             <label for="true">Available for viewings</label>
           </div>
           <div class="form-group radio-option">
-            <input type="radio" name="available" value="false" id="false">
+            <input type="radio" name="available" value="false" id="false" <%= oldInput.available === 'false' ? 'checked' : '' %>>
             <label for="false">Not Available for viewings</label>
           </div>
         </div>
 
         <div class="form-group">
           <label for="dateFrom">From</label>
-          <input type="date" name="dateFrom" id="dateFrom" required>
+          <input type="date" name="dateFrom" id="dateFrom" value="<%= oldInput.dateFrom || '' %>" required>
         </div>
 
         <div class="form-group">
           <label for="dateTo">To</label>
-          <input type="date" name="dateTo" id="dateTo" required>
+          <input type="date" name="dateTo" id="dateTo" value="<%= oldInput.dateTo || '' %>" required>
         </div>
 
         <div class="form-subsection time-slots-section">
@@ -118,7 +121,7 @@
           <div class="checkbox-group time-slot-picker">
             <% timeSlots.forEach(time => { %>
             <div class="checkbox-option time-slot-option">
-              <input type="checkbox" name="time" value="<%= time %>" id="<%= time %>">
+              <input type="checkbox" name="time" value="<%= time %>" <%= oldInput.time && oldInput.time.includes(time) ? 'checked' : '' %> id="<%= time %>">
               <label for="<%= time %>"><%= time %></label>
             </div>
             <% }); %>
@@ -130,16 +133,6 @@
 
   </form>
 
-  <% if (errorMsg && errorMsg.length > 0) { %>
-  <script>
-    Swal.fire({
-      title: 'Invalid Input!',
-      text: <%- JSON.stringify(errorMsg[0]) %>, // Safely inject the error text
-      icon: 'error',
-      confirmButtonText: 'Try Again'
-    });
-  </script>
-  <% } %>
 
 </body>
 

@@ -5,7 +5,6 @@ require("./config/database");
 const path = require("path");
 const express = require("express");
 const app = express();
-const flash = require("connect-flash");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 const session = require("express-session");
@@ -23,7 +22,6 @@ const reviewRouter = require("./routers/reviewRouter");
 const isSignedIn = require("./middlewares/isSignedIn");
 const addUserToViews = require("./middlewares/addUserToViews");
 const addPropToViews = require("./middlewares/addPropToViews");
-const passError = require("./middlewares/passError");
 // MIDDLEWARES
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -41,8 +39,6 @@ app.use(
 app.use(morgan("dev"));
 app.use(addUserToViews);
 app.use(addPropToViews);
-app.use(flash());
-app.use(passError);
 
 // Routes
 // Public Routes

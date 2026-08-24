@@ -1,0 +1,10 @@
+  <% if (errors.length > 0) { %>
+  <div class="error-banner">
+    <strong>Please fix these errors:</strong>
+    <ul>
+      <% errors.forEach(function(error) { %>
+      <li><%= error %></li>
+      <% }); %>
+    </ul>
+  </div>
+  <% } %>

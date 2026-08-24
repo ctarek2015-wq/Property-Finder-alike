@@ -8,52 +8,60 @@ const index = async (req, res) => {
 };
 
 const newProp = async (req, res) => {
-  res.render("users/properties/new.ejs");
+  res.render("users/properties/new.ejs", { oldInput: {}, errors: [] });
 };
 
 const create = async (req, res) => {
   try {
-    if (req.body.price < 0) {
-      req.flash("error", "Invalid Price: Price cannot be negative.");
-      return res.redirect("/properties/new");
+    const requiredFields = [
+      "title",
+      "description",
+      "price",
+      "location",
+      "area",
+      "bedrooms",
+      "bathrooms",
+      "dateFrom",
+      "dateTo",
+    ];
+    const oldInput = req.body;
+    let errors = [];
+
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        errors.push(`Missing required field: ${field}`);
+      }
     }
 
-    if (req.body.area < 0) {
-      req.flash("error", "Invalid Area: Area cannot be negative.");
-      return res.redirect("/properties/new");
+    if (Number(req.body.price) < 0) {
+      errors.push("Invalid Price: Price cannot be negative.");
     }
 
-    if (req.body.bedrooms < 0) {
-      console.log("Invalid Bedrooms: Number of bedrooms cannot be negative.");
-      req.flash(
-        "error",
-        "Invalid Bedrooms: Number of bedrooms cannot be negative.",
-      );
-      return res.redirect("/properties/new");
+    if (Number(req.body.area) < 0) {
+      errors.push("Invalid Area: Area cannot be negative.");
     }
 
-    if (req.body.bathrooms < 0) {
-      req.flash(
-        "error",
-        "Invalid Bathrooms: Number of bathrooms cannot be negative.",
-      );
-      return res.redirect("/properties/new");
+    if (Number(req.body.bedrooms) < 0) {
+      errors.push("Invalid Bedrooms: Number of bedrooms cannot be negative.");
     }
 
-    if (new Date(req.body.dateFrom) < new Date()) {
-      req.flash(
-        "error",
-        "Invalid Start Date: Start date cannot be in the past.",
-      );
-      return res.redirect("/properties/new");
+    if (Number(req.body.bathrooms) < 0) {
+      errors.push("Invalid Bathrooms: Number of bathrooms cannot be negative.");
+    }
+
+    if (
+      new Date(req.body.dateFrom) <
+      new Date(new Date().toISOString().split("T")[0])
+    ) {
+      errors.push("Invalid Start Date: Start date cannot be in the past.");
     }
 
     if (new Date(req.body.dateTo) < new Date(req.body.dateFrom)) {
-      req.flash(
-        "error",
-        "Invalid End Date: End date cannot be before start date.",
-      );
-      return res.redirect("/properties/new");
+      errors.push("Invalid End Date: End date cannot be before start date.");
+    }
+
+    if (errors.length > 0) {
+      return res.render("users/properties/new.ejs", { errors, oldInput });
     }
 
     const newProp = await Property.create(req.body);

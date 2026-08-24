@@ -13,50 +13,54 @@ const newProp = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    if (req.body.price < 0) {
+      req.flash("error", "Invalid Price: Price cannot be negative.");
+      return res.redirect("/properties/new");
+    }
+
+    if (req.body.area < 0) {
+      req.flash("error", "Invalid Area: Area cannot be negative.");
+      return res.redirect("/properties/new");
+    }
+
+    if (req.body.bedrooms < 0) {
+      console.log("Invalid Bedrooms: Number of bedrooms cannot be negative.");
+      req.flash(
+        "error",
+        "Invalid Bedrooms: Number of bedrooms cannot be negative.",
+      );
+      return res.redirect("/properties/new");
+    }
+
+    if (req.body.bathrooms < 0) {
+      req.flash(
+        "error",
+        "Invalid Bathrooms: Number of bathrooms cannot be negative.",
+      );
+      return res.redirect("/properties/new");
+    }
+
+    if (new Date(req.body.dateFrom) < new Date()) {
+      req.flash(
+        "error",
+        "Invalid Start Date: Start date cannot be in the past.",
+      );
+      return res.redirect("/properties/new");
+    }
+
+    if (new Date(req.body.dateTo) < new Date(req.body.dateFrom)) {
+      req.flash(
+        "error",
+        "Invalid End Date: End date cannot be before start date.",
+      );
+      return res.redirect("/properties/new");
+    }
+
     const newProp = await Property.create(req.body);
     const newAppointment = await Appointment.create(req.body);
-    const formData = req.body;
     newProp.owner = req.session.user._id;
-
-    if (newAppointment.price < 0) {
-      const errorPrice = "Price cannot be negative.";
-      return res.render("users/properties/new.ejs", { errorPrice, formData });
-    }
-
-    if (newAppointment.area < 0) {
-      const errorArea = "Area cannot be negative.";
-      return res.render("users/properties/new.ejs", { errorArea, formData });
-    }
-
-    if (newAppointment.bedrooms < 0) {
-      const errorBedrooms = "Number of bedrooms cannot be negative.";
-      return res.render("users/properties/new.ejs", {
-        errorBedrooms,
-        formData,
-      });
-    }
-
-    if (newAppointment.bathrooms < 0) {
-      const errorBathrooms = "Number of bathrooms cannot be negative.";
-      return res.render("users/properties/new.ejs", {
-        errorBathrooms,
-        formData,
-      });
-    }
-
-    if (newAppointment.dateFrom < new Date()) {
-      const errorDateFrom = "Start date cannot be in the past.";
-      return res.render("users/properties/new.ejs", {
-        errorDateFrom,
-        formData,
-      });
-    }
-
-    if (newAppointment.dateTo < newAppointment.dateFrom) {
-      const errorDateTo = "End date cannot be before start date.";
-      return res.render("users/properties/new.ejs", { errorDateTo, formData });
-    }
     newProp.availableAppointments = newAppointment._id;
+
     await newAppointment.save();
     await newProp.save();
     res.redirect("/properties");

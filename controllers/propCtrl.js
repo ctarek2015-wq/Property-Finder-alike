@@ -102,17 +102,72 @@ const edit = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-  await Appointment.findByIdAndUpdate(
-    property.availableAppointments,
-    req.body,
-    {
+  try {
+    const requiredFields = [
+      "title",
+      "description",
+      "price",
+      "location",
+      "area",
+      "bedrooms",
+      "bathrooms",
+      "dateFrom",
+      "dateTo",
+    ];
+    const oldInput = req.body;
+    let errors = [];
+
+    for (const field of requiredFields) {
+      if (!req.body[field]) {
+        errors.push(`Missing required field: ${field}`);
+      }
+    }
+
+    if (Number(req.body.price) < 0) {
+      errors.push("Invalid Price: Price cannot be negative.");
+    }
+
+    if (Number(req.body.area) < 0) {
+      errors.push("Invalid Area: Area cannot be negative.");
+    }
+
+    if (Number(req.body.bedrooms) < 0) {
+      errors.push("Invalid Bedrooms: Number of bedrooms cannot be negative.");
+    }
+
+    if (Number(req.body.bathrooms) < 0) {
+      errors.push("Invalid Bathrooms: Number of bathrooms cannot be negative.");
+    }
+
+    if (
+      new Date(req.body.dateFrom) <
+      new Date(new Date().toISOString().split("T")[0])
+    ) {
+      errors.push("Invalid Start Date: Start date cannot be in the past.");
+    }
+
+    if (new Date(req.body.dateTo) < new Date(req.body.dateFrom)) {
+      errors.push("Invalid End Date: End date cannot be before start date.");
+    }
+
+    if (errors.length > 0) {
+      return res.render("users/properties/edit.ejs", { errors, oldInput });
+    }
+
+    const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-    },
-  );
-  res.redirect(`/properties/${property._id}`);
+    });
+    await Appointment.findByIdAndUpdate(
+      property.availableAppointments,
+      req.body,
+      {
+        new: true,
+      },
+    );
+    res.redirect(`/properties/${property._id}`);
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 const deleteProp = async (req, res) => {

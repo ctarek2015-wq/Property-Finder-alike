@@ -44,6 +44,7 @@
   gap: var(--space-3);
   max-width: var(--content-max);
   margin: var(--space-4) 0 0;
+  margin: var(--space-4) 0 0;
   padding: var(--space-4);
   background: var(--surface-2);
   border: 1px solid var(--line);
@@ -93,6 +94,18 @@
 @media (max-width: 900px) {
   .page-home .home-filter-bar {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 817px) {
+  .page-home .home-filter-disclosure summary {
+    top: 22vh;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-home .home-filter-disclosure summary {
+    top: 17vh;
   }
 }
 

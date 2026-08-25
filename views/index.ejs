@@ -17,62 +17,65 @@
   <h1>Welcome to the app!</h1>
   <% } %>
 
-  <form class="home-filter-bar" action="/" method="get">
-    <div class="filter-field">
-      <label for="price-min">Price from</label>
-      <input type="number" id="price-min" name="priceMin" min="0" step="any" value="<%= filters.priceMin %>">
-    </div>
-    <div class="filter-field">
-      <label for="price-max">Price to</label>
-      <input type="number" id="price-max" name="priceMax" min="0" step="any" value="<%= filters.priceMax %>">
-    </div>
-    <div class="filter-field">
-      <label for="area-min">Area from</label>
-      <input type="number" id="area-min" name="areaMin" min="0" step="any" value="<%= filters.areaMin %>">
-    </div>
-    <div class="filter-field">
-      <label for="area-max">Area to</label>
-      <input type="number" id="area-max" name="areaMax" min="0" step="any" value="<%= filters.areaMax %>">
-    </div>
-    <div class="filter-field">
-      <label for="bedrooms">Bedrooms (min)</label>
-      <input type="number" id="bedrooms" name="bedrooms" min="0" step="1" value="<%= filters.bedrooms %>">
-    </div>
-    <div class="filter-field">
-      <label for="bathrooms">Bathrooms (min)</label>
-      <input type="number" id="bathrooms" name="bathrooms" min="0" step="1" value="<%= filters.bathrooms %>">
-    </div>
-    <div class="filter-field">
-      <label for="location">Location</label>
-      <select id="location" name="location">
-        <option value="">Any location</option>
-        <% locations.forEach(option => { %>
-        <option value="<%= option %>" <%= filters.location === option ? "selected" : "" %>><%= option %></option>
-        <% }) %>
-      </select>
-    </div>
-    <div class="filter-field">
-      <label for="rating">Reviews (min)</label>
-      <select id="rating" name="rating">
-        <option value="">Any rating</option>
-        <% [1, 2, 3, 4, 5].forEach(option => { %>
-        <option value="<%= option %>" <%= filters.rating === String(option) ? "selected" : "" %>><%= option %> stars</option>
-        <% }) %>
-      </select>
-    </div>
-    <div class="filter-field">
-      <label for="availability">Availability</label>
-      <select id="availability" name="availability">
-        <option value="available" <%= filters.availability === "available" ? "selected" : "" %>>Available</option>
-        <option value="unavailable" <%= filters.availability === "unavailable" ? "selected" : "" %>>Unavailable</option>
-        <option value="all" <%= filters.availability === "all" ? "selected" : "" %>>All listings</option>
-      </select>
-    </div>
-    <div class="filter-actions">
-      <button class="btn" type="submit">Apply filters</button>
-      <a class="btn btn-secondary" href="/">Clear</a>
-    </div>
-  </form>
+  <details class="home-filter-disclosure">
+    <summary>Filter</summary>
+    <form class="home-filter-bar" action="/" method="get">
+      <div class="filter-field">
+        <label for="price-min">Price from</label>
+        <input type="number" id="price-min" name="priceMin" min="0" step="any" value="<%= filters.priceMin %>">
+      </div>
+      <div class="filter-field">
+        <label for="price-max">Price to</label>
+        <input type="number" id="price-max" name="priceMax" min="0" step="any" value="<%= filters.priceMax %>">
+      </div>
+      <div class="filter-field">
+        <label for="area-min">Area from</label>
+        <input type="number" id="area-min" name="areaMin" min="0" step="any" value="<%= filters.areaMin %>">
+      </div>
+      <div class="filter-field">
+        <label for="area-max">Area to</label>
+        <input type="number" id="area-max" name="areaMax" min="0" step="any" value="<%= filters.areaMax %>">
+      </div>
+      <div class="filter-field">
+        <label for="bedrooms">Bedrooms (min)</label>
+        <input type="number" id="bedrooms" name="bedrooms" min="0" step="1" value="<%= filters.bedrooms %>">
+      </div>
+      <div class="filter-field">
+        <label for="bathrooms">Bathrooms (min)</label>
+        <input type="number" id="bathrooms" name="bathrooms" min="0" step="1" value="<%= filters.bathrooms %>">
+      </div>
+      <div class="filter-field">
+        <label for="location">Location</label>
+        <select id="location" name="location">
+          <option value="">Any location</option>
+          <% locations.forEach(option => { %>
+          <option value="<%= option %>" <%= filters.location === option ? "selected" : "" %>><%= option %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label for="rating">Reviews (min)</label>
+        <select id="rating" name="rating">
+          <option value="">Any rating</option>
+          <% [1, 2, 3, 4, 5].forEach(option => { %>
+          <option value="<%= option %>" <%= filters.rating === String(option) ? "selected" : "" %>><%= option %> stars</option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label for="availability">Availability</label>
+        <select id="availability" name="availability">
+          <option value="available" <%= filters.availability === "available" ? "selected" : "" %>>Available</option>
+          <option value="unavailable" <%= filters.availability === "unavailable" ? "selected" : "" %>>Unavailable</option>
+          <option value="all" <%= filters.availability === "all" ? "selected" : "" %>>All listings</option>
+        </select>
+      </div>
+      <div class="filter-actions">
+        <button class="btn" type="submit">Apply filters</button>
+        <a class="btn btn-secondary" href="/">Clear</a>
+      </div>
+    </form>
+  </details>
 
   <% if(properties.length === 0){ %>
   <p class="home-no-results">No properties match these filters.</p>

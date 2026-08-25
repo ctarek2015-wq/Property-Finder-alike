@@ -53,12 +53,29 @@ const propertySchema = new mongoose.Schema({
     required: true,
     min: 0,
   },
-  images: [
-    {
-      type: String,
-      match: /^https?:\/\/\S+$/i,
+  images: {
+    type: [
+      {
+        url: {
+          type: String,
+          required: true,
+          trim: true,
+          match: /^https?:\/\/\S+$/i,
+        },
+        publicId: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+      },
+    ],
+    default: [],
+    validate: {
+      validator: (images) => images.length <= 10,
+      message: "A property can have at most 10 images.",
     },
-  ],
+  },
+
   averageRating: {
     type: Number,
     default: 0,

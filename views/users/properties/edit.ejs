@@ -11,9 +11,10 @@
 
 <body class="page page-properties">
   <%- include('../../partials/_navbar.ejs') %>
+  <%- include('../../partials/_errors.ejs', { errors: errors || [] }) %>
   <h1>Welcome <%= user.username %></h1>
 
-  <form action="/properties/<%= property._id %>?_method=PUT" method="post" id="property-form" class="property-form">
+  <form action="/properties/<%= property._id %>?_method=PUT" method="post" enctype="multipart/form-data" id="property-form" class="property-form">
 
     <div class="form-section property-edit-section">
       <h3 class="legend">Edit Property:</h3>
@@ -86,8 +87,22 @@
         <h4 class="legend">Property Images:</h4>
 
         <div class="form-group">
-          <label for="images">Paste URL here:</label>
-          <input type="text" name="images" id="images" value="<%= property.images %>">
+          <label for="images">Add property images:</label>
+          <input type="file" name="images" id="images" accept="image/jpeg,image/png,image/webp" multiple>
+          <small class="image-upload-help">Upload up to 10 images total. New images are added to the gallery.</small>
+          <% if (property.images && property.images.length > 0) { %>
+          <div class="current-image-gallery">
+            <% property.images.forEach((image, index) => { %>
+            <label class="current-image-item" for="remove-image-<%= index %>">
+              <img src="<%= image.url %>" alt="Current property image <%= index + 1 %>">
+              <span>
+                <input type="checkbox" name="removeImages" value="<%= image.publicId %>" id="remove-image-<%= index %>">
+                Remove image
+              </span>
+            </label>
+            <% }); %>
+          </div>
+          <% } %>
         </div>
       </div>
 

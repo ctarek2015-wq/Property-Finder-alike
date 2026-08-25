@@ -65,6 +65,8 @@ const validateProperty = (req, res, next) => {
   const errors = [];
   const body = req.body;
 
+  if (req.uploadError) errors.push(req.uploadError);
+
   addRequiredErrors(
     body,
     [
@@ -120,26 +122,29 @@ const validateProperty = (req, res, next) => {
     errors.push("Invalid description: maximum length is 500 characters.");
   }
 
-  const images = Array.isArray(body.images)
-    ? body.images
-    : isBlank(body.images)
+  if (req.method === "POST" && (!req.files || req.files.length === 0)) {
+    errors.push("At least one image is required.");
+  }
+
+  const removeImages =
+    body.removeImages === undefined
       ? []
-      : [body.images];
-  for (const image of images) {
-    if (!/^https?:\/\/\S+$/i.test(String(image).trim())) {
-      errors.push("Invalid image URL.");
-      break;
-    }
+      : Array.isArray(body.removeImages)
+        ? body.removeImages
+        : [body.removeImages];
+  if (removeImages.some((publicId) => isBlank(publicId))) {
+    errors.push("Invalid image removal selection.");
   }
 
   if (errors.length > 0) {
     req.validationErrors = errors;
   }
 
-  req.body.title = String(body.title).trim();
-  req.body.description = String(body.description).trim();
+  if (!isBlank(body.title)) req.body.title = String(body.title).trim();
+  if (!isBlank(body.description))
+    req.body.description = String(body.description).trim();
   ["price", "area", "bedrooms", "bathrooms"].forEach((field) => {
-    req.body[field] = Number(body[field]);
+    if (!isBlank(body[field])) req.body[field] = Number(body[field]);
   });
   next();
 };

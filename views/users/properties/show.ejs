@@ -26,7 +26,15 @@
 
     <div class="form-subsection property-images-section">
       <h4 class="legend">Property Images:</h4>
-      <img class="property-image" src="<%= property.images %>" alt="">
+      <% if (property.images && property.images.length > 0) { %>
+      <div class="property-image-gallery">
+        <% property.images.forEach((image, index) => { %>
+        <img class="property-image" src="<%= image.url %>" alt="Property image <%= index + 1 %>">
+        <% }); %>
+      </div>
+      <% } else { %>
+      <p class="no-property-image">No images available.</p>
+      <% } %>
     </div>
 
     <div class="property-details">

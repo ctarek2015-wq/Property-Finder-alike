@@ -17,6 +17,42 @@
   align-items: baseline;
 }
 
+.page-properties .image-upload-help {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--muted);
+}
+
+.page-properties .property-image-gallery,
+.page-properties .current-image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+}
+
+.page-properties .property-image,
+.page-properties .current-image-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.page-properties .current-image-item {
+  display: grid;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.page-properties .current-image-item:has(input:checked) img {
+  opacity: 0.45;
+}
+
+.page-properties .no-property-image {
+  color: var(--muted);
+}
+
 @media (min-width: 900px) {
   .page-properties .property-info-section {
     flex-direction: row;

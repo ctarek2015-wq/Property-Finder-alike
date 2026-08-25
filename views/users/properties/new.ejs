@@ -15,14 +15,13 @@
 
   <%- include('../../partials/_errors.ejs') %>
 
-  <h1>Welcome <%= user.username %></h1>
 
   <form action="/properties" method="post" enctype="multipart/form-data" id="property-form" class="property-form">
 
     <div class="form-section property-edit-section">
-      <h3 class="legend">New Property:</h3>
+      <h2 class="legend">New Property:</h2>
       <div class="form-subsection property-details-section">
-        <h4 class="legend">Property Details:</h4>
+        <h3 class="legend">Property Details:</h3>
 
         <div class="form-group">
           <label for="title">Property Title:</label>
@@ -45,7 +44,7 @@
         </div>
 
         <div class="form-subsection listing-type-section">
-          <h5 class="legend">Property Type:</h5>
+          <h3 class="legend">Property Type:</h3>
 
           <div class="radio-group">
             <div class="form-group radio-option">
@@ -66,7 +65,7 @@
       </div>
 
       <div class="form-subsection property-specs-section">
-        <h4 class="legend">Property Specifications:</h4>
+        <h3 class="legend">Property Specifications:</h3>
 
         <div class="form-group">
           <label for="area">Area (in Square Meters):</label>
@@ -85,7 +84,7 @@
       </div>
 
       <div class="form-subsection property-images-section">
-        <h4 class="legend">Property Images:</h4>
+        <h3 class="legend">Property Images:</h3>
 
         <div class="form-group">
           <label for="images">Property images:</label>
@@ -96,7 +95,7 @@
       </div>
 
       <div class="form-subsection property-availability-section">
-        <h4 class="legend">Property Availability:</h4>
+        <h3 class="legend">Property Availability:</h3>
 
         <div class="radio-group">
           <div class="form-group radio-option">
@@ -120,7 +119,7 @@
         </div>
 
         <div class="form-subsection time-slots-section">
-          <h5 class="legend">Time Slots:</h5>
+          <h3 class="legend">Time Slots:</h3>
           <div class="checkbox-group time-slot-picker">
             <% timeSlots.forEach(time => { %>
             <div class="checkbox-option time-slot-option">

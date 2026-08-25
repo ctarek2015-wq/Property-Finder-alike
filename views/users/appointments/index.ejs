@@ -10,8 +10,7 @@
 
 <body class="page page-appointments">
   <%- include('../../partials/_navbar.ejs') %>
-  <h1>Welcome <%= user.username %></h1>
-  <h2>Your Appointments:</h2>
+  <h1>Your Appointments:</h1>
 
   <% if(viewings.length === 0){ %>
   <p>You have no appointments scheduled.</p>
@@ -26,9 +25,9 @@
       <h3 class="legend">Viewing for <%= viewing.propertyId.title %></h3>
 
       <div class="appointment-details">
-        <p class="detail-item">Appointment Date: <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
+        <p class="detail-item"><strong>Appointment Date:</strong> <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
         <div class="time-slots-inline">
-          <p class="detail-item">Appointment Time:</p>
+          <p class="detail-item"><strong>Appointment Time:</strong></p>
           <div class="time-slot-list">
             <span class="time-slot-chip"><%= viewing.appointmentTime %></span>
           </div>
@@ -36,11 +35,11 @@
 
         <% if(user.role === 'seeker'){ %>
 
-        <p class="detail-item">Property Owner: <%= viewing.ownerId.username %></p>
-        <p class="detail-item">Status: <%= viewing.status %></p>
+        <p class="detail-item"><strong>Property Owner:</strong> <%= viewing.ownerId.username %></p>
+        <p class="detail-item"><strong>Status:</strong> <%= viewing.status %></p>
         <% } else { %>
-        <p class="detail-item">Property Seeker: <%= viewing.viewerId.username %></p>
-        <p class="detail-item">Status: <%= viewing.status %></p>
+        <p class="detail-item"><strong>Property Seeker:</strong> <%= viewing.viewerId.username %></p>
+        <p class="detail-item"><strong>Status:</strong> <%= viewing.status %></p>
         <% } %>
       </div>
 

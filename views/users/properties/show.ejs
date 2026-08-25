@@ -16,14 +16,14 @@
 
   <div id="property-info" class="property-info-section">
     <div class="property-details">
-      <p class="detail-item">Owner: <%= property.owner.username %></p>
-      <p class="detail-item">Description: <%= property.description %></p>
-      <p class="detail-item">Location: <%= property.location %></p>
-      <p class="detail-item">Property Type: <%= property.listingType %></p>
-      <p class="detail-item">Price: <%= property.price %></p>
-      <p class="detail-item">Area: <%= property.area %></p>
-      <p class="detail-item">Bedrooms: <%= property.bedrooms %></p>
-      <p class="detail-item">Bathrooms: <%= property.bathrooms %></p>
+      <p class="detail-item"><strong>Owner:</strong> <%= property.owner.username %></p>
+      <p class="detail-item"><strong>Description:</strong> <%= property.description %></p>
+      <p class="detail-item"><strong>Location:</strong> <%= property.location %></p>
+      <p class="detail-item"><strong>Property Type:</strong> <%= property.listingType %></p>
+      <p class="detail-item"><strong>Price:</strong> <%= property.price %></p>
+      <p class="detail-item"><strong>Area:</strong> <%= property.area %></p>
+      <p class="detail-item"><strong>Bedrooms:</strong> <%= property.bedrooms %></p>
+      <p class="detail-item"><strong>Bathrooms:</strong> <%= property.bathrooms %></p>
     </div>
 
     <div class="form-subsection property-images-section">
@@ -53,15 +53,15 @@
 
     <div class="property-details">
       <% if(property.available === true){ %>
-      <p class="detail-item">Available for viewings</p>
+      <p class="detail-item"><strong>Available for viewings</strong></p>
       <% }else{ %>
-      <p class="detail-item">Not Available for viewings</p>
+      <p class="detail-item"><strong>Not Available for viewings</strong></p>
       <% } %>
       <% if(property.availableAppointments){ %>
-      <p class="detail-item">From: <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-      <p class="detail-item">To: <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+      <p class="detail-item"><strong>From:</strong> <%= property.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+      <p class="detail-item"><strong>To:</strong> <%= property.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
       <div class="time-slots-block">
-        <p class="detail-item">Time Slots:</p>
+        <p class="detail-item"><strong>Time Slots:</strong></p>
         <div class="time-slot-list">
           <% const detailSlots = Array.isArray(property.availableAppointments.time) ? property.availableAppointments.time : [property.availableAppointments.time]; %>
           <% detailSlots.forEach(slot => { %>
@@ -94,8 +94,8 @@
       <% propReviews.forEach(review => { %>
 
       <div class="review-card">
-        <p class="detail-item">Rating: <%= review.rating %></p>
-        <p class="detail-item">Comment: <%= review.comment %></p>
+        <p class="detail-item"><strong>Rating:</strong> <%= review.rating %></p>
+        <p class="detail-item"><strong>Comment:</strong> <%= review.comment %></p>
 
         <% if(review.reviewerId.toString() === user._id.toString()){ %>
         <div class="review-actions">

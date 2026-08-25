@@ -10,7 +10,7 @@
 
 <body class="page page-properties">
   <%- include('../../partials/_navbar.ejs') %>
-  <h1>Welcome <%= user.username %></h1>
+  <h1>Your Listings</h1>
 
   <% const owned = properties.filter(prop=>prop.owner._id.toString() === user._id) %>
   <% if(owned.length === 0){ %>
@@ -31,24 +31,24 @@
       <% } %>
       <h3 class="legend"><%= prop.title %></h3>
       <div class="property-details">
-        <p class="detail-item">Owner: <%= prop.owner.username %></p>
-        <p class="detail-item">Description: <%= prop.description %></p>
-        <p class="detail-item">Location: <%= prop.location %></p>
-        <p class="detail-item">Property Type: <%= prop.listingType %></p>
-        <p class="detail-item">Price: <%= prop.price %></p>
-        <p class="detail-item">Area: <%= prop.area %></p>
-        <p class="detail-item">Bedrooms: <%= prop.bedrooms %></p>
-        <p class="detail-item">Bathrooms: <%= prop.bathrooms %></p>
+        <p class="detail-item"><strong>Owner:</strong> <%= prop.owner.username %></p>
+        <p class="detail-item"><strong>Description:</strong> <%= prop.description %></p>
+        <p class="detail-item"><strong>Location:</strong> <%= prop.location %></p>
+        <p class="detail-item"><strong>Property Type:</strong> <%= prop.listingType %></p>
+        <p class="detail-item"><strong>Price:</strong> <%= prop.price %></p>
+        <p class="detail-item"><strong>Area:</strong> <%= prop.area %></p>
+        <p class="detail-item"><strong>Bedrooms:</strong> <%= prop.bedrooms %></p>
+        <p class="detail-item"><strong>Bathrooms:</strong> <%= prop.bathrooms %></p>
         <% if(prop.available === true){ %>
-        <p class="detail-item">Available for viewings</p>
+        <p class="detail-item"><strong>Available for viewings</strong></p>
         <% }else{ %>
-        <p class="detail-item">Not Available for viewings</p>
+        <p class="detail-item"><strong>Not Available for viewings</strong></p>
         <% } %>
         <% if(prop.availableAppointments){ %>
-        <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-        <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
+        <p class="detail-item"><strong>From:</strong> <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
+        <p class="detail-item"><strong>To:</strong> <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
         <div class="time-slots-block">
-          <p class="detail-item">Time Slots:</p>
+          <p class="detail-item"><strong>Time Slots:</strong></p>
           <div class="time-slot-list">
             <% const ownerSlots = Array.isArray(prop.availableAppointments.time) ? prop.availableAppointments.time : [prop.availableAppointments.time]; %>
             <% ownerSlots.forEach(slot => { %>

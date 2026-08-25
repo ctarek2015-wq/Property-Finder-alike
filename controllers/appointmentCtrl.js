@@ -35,7 +35,14 @@ const newAppointment = async (req, res) => {
 
 const create = async (req, res) => {
   try {
+    if (req.validationErrors) {
+      return res.status(400).send(req.validationErrors.join(" "));
+    }
+
     const prop = await Property.findById(req.query.propertyId);
+    if (!prop) {
+      return res.status(404).send("Property not found.");
+    }
     const newViewing = new Viewing(req.body);
     newViewing.viewerId = req.session.user._id;
     newViewing.propertyId = req.query.propertyId;

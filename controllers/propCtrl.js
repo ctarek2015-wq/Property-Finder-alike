@@ -13,55 +13,12 @@ const newProp = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const requiredFields = [
-      "title",
-      "description",
-      "price",
-      "location",
-      "area",
-      "bedrooms",
-      "bathrooms",
-      "dateFrom",
-      "dateTo",
-    ];
     const oldInput = req.body;
-    let errors = [];
-
-    for (const field of requiredFields) {
-      if (!req.body[field]) {
-        errors.push(`Missing required field: ${field}`);
-      }
-    }
-
-    if (Number(req.body.price) < 0) {
-      errors.push("Invalid Price: Price cannot be negative.");
-    }
-
-    if (Number(req.body.area) < 0) {
-      errors.push("Invalid Area: Area cannot be negative.");
-    }
-
-    if (Number(req.body.bedrooms) < 0) {
-      errors.push("Invalid Bedrooms: Number of bedrooms cannot be negative.");
-    }
-
-    if (Number(req.body.bathrooms) < 0) {
-      errors.push("Invalid Bathrooms: Number of bathrooms cannot be negative.");
-    }
-
-    if (
-      new Date(req.body.dateFrom) <
-      new Date(new Date().toISOString().split("T")[0])
-    ) {
-      errors.push("Invalid Start Date: Start date cannot be in the past.");
-    }
-
-    if (new Date(req.body.dateTo) < new Date(req.body.dateFrom)) {
-      errors.push("Invalid End Date: End date cannot be before start date.");
-    }
-
-    if (errors.length > 0) {
-      return res.render("users/properties/new.ejs", { errors, oldInput });
+    if (req.validationErrors) {
+      return res.render("users/properties/new.ejs", {
+        errors: req.validationErrors,
+        oldInput,
+      });
     }
 
     const newProp = await Property.create(req.body);
@@ -103,55 +60,16 @@ const edit = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const requiredFields = [
-      "title",
-      "description",
-      "price",
-      "location",
-      "area",
-      "bedrooms",
-      "bathrooms",
-      "dateFrom",
-      "dateTo",
-    ];
     const oldInput = req.body;
-    let errors = [];
-
-    for (const field of requiredFields) {
-      if (!req.body[field]) {
-        errors.push(`Missing required field: ${field}`);
-      }
-    }
-
-    if (Number(req.body.price) < 0) {
-      errors.push("Invalid Price: Price cannot be negative.");
-    }
-
-    if (Number(req.body.area) < 0) {
-      errors.push("Invalid Area: Area cannot be negative.");
-    }
-
-    if (Number(req.body.bedrooms) < 0) {
-      errors.push("Invalid Bedrooms: Number of bedrooms cannot be negative.");
-    }
-
-    if (Number(req.body.bathrooms) < 0) {
-      errors.push("Invalid Bathrooms: Number of bathrooms cannot be negative.");
-    }
-
-    if (
-      new Date(req.body.dateFrom) <
-      new Date(new Date().toISOString().split("T")[0])
-    ) {
-      errors.push("Invalid Start Date: Start date cannot be in the past.");
-    }
-
-    if (new Date(req.body.dateTo) < new Date(req.body.dateFrom)) {
-      errors.push("Invalid End Date: End date cannot be before start date.");
-    }
-
-    if (errors.length > 0) {
-      return res.render("users/properties/edit.ejs", { errors, oldInput });
+    if (req.validationErrors) {
+      const property = await Property.findById(req.params.id).populate(
+        "availableAppointments",
+      );
+      return res.render("users/properties/edit.ejs", {
+        property,
+        errors: req.validationErrors,
+        oldInput,
+      });
     }
 
     const property = await Property.findByIdAndUpdate(req.params.id, req.body, {

@@ -3,6 +3,15 @@ const Property = require("../models/property");
 
 const create = async (req, res) => {
   try {
+    if (req.validationErrors) {
+      return res.status(400).send(req.validationErrors.join(" "));
+    }
+
+    const property = await Property.findById(req.query.propertyId);
+    if (!property) {
+      return res.status(404).send("Property not found.");
+    }
+
     const newReview = await Review.create(req.body);
     newReview.reviewerId = req.session.user._id;
     newReview.propertyId = req.query.propertyId;
@@ -25,7 +34,10 @@ const edit = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    console.log(req.body);
+    if (req.validationErrors) {
+      return res.status(400).send(req.validationErrors.join(" "));
+    }
+
     const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });

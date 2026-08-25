@@ -4,11 +4,13 @@ const propertySchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
+    trim: true,
     maxlength: 100,
   },
   description: {
     type: String,
     required: true,
+    trim: true,
     maxlength: 500,
   },
   listingType: {
@@ -19,6 +21,7 @@ const propertySchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
+    min: 0,
   },
   location: {
     type: String,
@@ -38,18 +41,22 @@ const propertySchema = new mongoose.Schema({
   area: {
     type: Number,
     required: true,
+    min: 0,
   },
   bedrooms: {
     type: Number,
     required: true,
+    min: 0,
   },
   bathrooms: {
     type: Number,
     required: true,
+    min: 0,
   },
   images: [
     {
       type: String,
+      match: /^https?:\/\/\S+$/i,
     },
   ],
   averageRating: {

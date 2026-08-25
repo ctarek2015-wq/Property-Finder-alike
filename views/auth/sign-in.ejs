@@ -10,11 +10,12 @@
 
 <body class="page page-auth">
   <%- include('../partials/_navbar') %>
+  <%- include('../partials/_errors.ejs', { errors: errors || [] }) %>
   <h1>Sign in to your account!</h1>
   <form action="/auth/sign-in" method="POST" id="sign-in-form" class="auth-form">
     <div class="form-group">
       <label for="email">Email:</label>
-      <input type="email" name="email" id="email" required />
+      <input type="email" name="email" id="email" value="<%= oldInput.email || '' %>" required />
     </div>
 
     <div class="form-section role-section">

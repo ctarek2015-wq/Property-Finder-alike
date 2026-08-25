@@ -8,6 +8,12 @@ const availableAppointmentsSchema = new mongoose.Schema({
   dateTo: {
     type: Date,
     required: true,
+    validate: {
+      validator(dateTo) {
+        return !this.dateFrom || dateTo >= this.dateFrom;
+      },
+      message: "dateTo cannot be before dateFrom",
+    },
   },
   time: {
     type: [String],

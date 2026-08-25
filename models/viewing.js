@@ -4,6 +4,10 @@ const viewingSchema = new mongoose.Schema({
   appointmentDate: {
     type: Date,
     required: true,
+    validate: {
+      validator: (value) => !Number.isNaN(value.getTime()),
+      message: "appointmentDate must be a valid date",
+    },
   },
   appointmentTime: {
     type: String,

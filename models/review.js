@@ -16,6 +16,8 @@ const reviewSchema = new mongoose.Schema({
   },
   comment: {
     type: String,
+    trim: true,
+    maxlength: 500,
   },
   reviewed: {
     type: Boolean,

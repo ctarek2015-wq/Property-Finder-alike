@@ -3,11 +3,22 @@ const bcrypt = require("bcryptjs");
 const SALT_ROUNDS = 10;
 
 const signup = async (req, res) => {
-  res.render("auth/sign-up.ejs");
+  res.render("auth/sign-up.ejs", { errors: [], oldInput: {} });
 };
 
 const register = async (req, res) => {
   try {
+    if (req.validationErrors) {
+      return res.render("auth/sign-up.ejs", {
+        errors: req.validationErrors,
+        oldInput: {
+          username: req.body.username,
+          email: req.body.email,
+          role: req.body.role,
+        },
+      });
+    }
+
     // verify all fields are not empty
     const { username, email, password, confirmPassword } = req.body;
 
@@ -60,11 +71,18 @@ const register = async (req, res) => {
 };
 
 const signin = async (req, res) => {
-  res.render("auth/sign-in.ejs");
+  res.render("auth/sign-in.ejs", { errors: [], oldInput: {} });
 };
 
 const login = async (req, res) => {
   try {
+    if (req.validationErrors) {
+      return res.render("auth/sign-in.ejs", {
+        errors: req.validationErrors,
+        oldInput: { email: req.body.email, role: req.body.role },
+      });
+    }
+
     const userExists = await User.findOne({
       email: req.body.email,
       role: req.body.role,

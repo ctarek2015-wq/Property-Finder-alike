@@ -1,6 +1,16 @@
 const User = require("../models/users");
 const bcrypt = require("bcryptjs");
 const SALT_ROUNDS = 10;
+const sendWelcomeEmail = require("../services/sendWelcomeEmail");
+
+const renderAuthError = (res, view, error, body) => {
+  const oldInput = {
+    username: body.username,
+    email: body.email,
+    role: body.role,
+  };
+  return res.render(view, { errors: [error], oldInput });
+};
 
 const signup = async (req, res) => {
   res.render("auth/sign-up.ejs", { errors: [], oldInput: {} });
@@ -23,7 +33,12 @@ const register = async (req, res) => {
     const { username, email, password, confirmPassword } = req.body;
 
     if (!username || !email || !password || !confirmPassword) {
-      return res.send("All fields are required");
+      return renderAuthError(
+        res,
+        "auth/sign-up.ejs",
+        "All fields are required.",
+        req.body,
+      );
     }
 
     //verify if the user name exists
@@ -39,16 +54,31 @@ const register = async (req, res) => {
     });
 
     if (req.body.role === "owner" && ownerExists) {
-      return res.send("email or password is incorrect");
+      return renderAuthError(
+        res,
+        "auth/sign-up.ejs",
+        "An account already exists for this email and role.",
+        req.body,
+      );
     }
     if (req.body.role === "seeker" && seekerExists) {
-      return res.send("email or password is incorrect");
+      return renderAuthError(
+        res,
+        "auth/sign-up.ejs",
+        "An account already exists for this email and role.",
+        req.body,
+      );
     }
 
     //else check the pw match
     // else send err msg
     if (req.body.password !== req.body.confirmPassword) {
-      return res.send("email or password is incorrect");
+      return renderAuthError(
+        res,
+        "auth/sign-up.ejs",
+        "Passwords do not match.",
+        req.body,
+      );
     }
     //encrypt the pw
 
@@ -57,6 +87,11 @@ const register = async (req, res) => {
     // if yes, create new user, redirect home page
     const createUser = await User.create(req.body);
 
+    try {
+      await sendWelcomeEmail(createUser);
+    } catch (emailError) {
+      console.log("Welcome email could not be sent:", emailError.message);
+    }
     req.session.user = {
       username: createUser.username,
       role: createUser.role,
@@ -90,11 +125,21 @@ const login = async (req, res) => {
 
     //allow user if exists
     if (!userExists) {
-      return res.send("email or password is incorrect");
+      return renderAuthError(
+        res,
+        "auth/sign-in.ejs",
+        "Email or password is incorrect.",
+        req.body,
+      );
     }
     //make sure if user pw matches the db pw (compare)
     if (!bcrypt.compareSync(req.body.password, userExists.password)) {
-      return res.send("email or password is incorrect");
+      return renderAuthError(
+        res,
+        "auth/sign-in.ejs",
+        "Email or password is incorrect.",
+        req.body,
+      );
     }
 
     req.session.user = {

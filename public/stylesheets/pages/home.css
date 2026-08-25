@@ -2,6 +2,70 @@
   margin-top: var(--space-2);
 }
 
+.page-home .home-filter-bar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  max-width: var(--content-max);
+  margin: var(--space-5) auto 0;
+  padding: var(--space-4);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.page-home .filter-field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.page-home .filter-field label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.page-home .filter-field input,
+.page-home .filter-field select {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.page-home .filter-actions {
+  display: flex;
+  align-items: end;
+  gap: var(--space-2);
+  grid-column: span 2;
+}
+
+.page-home .filter-actions .btn {
+  flex: 1;
+  text-align: center;
+}
+
+.page-home .home-no-results {
+  max-width: var(--content-max);
+  margin: var(--space-5) auto 0;
+  color: var(--muted);
+}
+
 .page-home .property-listings {
   margin-top: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .page-home .home-filter-bar {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .page-home .home-filter-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .page-home .filter-actions {
+    grid-column: span 2;
+  }
 }

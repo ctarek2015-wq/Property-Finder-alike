@@ -21,6 +21,14 @@
 
   <div class="properties-list" id="properties-list">
     <div class="property-card">
+      <% const cardMainImage = prop.images && prop.images.length > 0
+        ? (prop.images.find(image => image.publicId === prop.mainImagePublicId) || prop.images[0])
+        : null; %>
+      <% if (cardMainImage) { %>
+      <img class="property-card-image" src="<%= cardMainImage.url %>" alt="<%= prop.title %>">
+      <% } else { %>
+      <div class="property-card-image property-card-image-empty" aria-label="No property image">No image</div>
+      <% } %>
       <h3 class="legend"><%= prop.title %></h3>
       <div class="property-details">
         <p class="detail-item">Owner: <%= prop.owner.username %></p>

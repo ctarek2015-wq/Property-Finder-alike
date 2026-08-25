@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>New Property</title>
   <link rel="stylesheet" href="/stylesheets/app.css" />
+  <script defer src="/js/property-image-picker.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -90,6 +91,7 @@
           <label for="images">Property images:</label>
           <input type="file" name="images" id="images" accept="image/jpeg,image/png,image/webp" multiple required>
           <small class="image-upload-help">Upload up to 10 JPG, PNG, or WebP images. Each file must be 5 MB or smaller.</small>
+          <div id="image-previews" class="image-preview-gallery" aria-live="polite"></div>
         </div>
       </div>
 

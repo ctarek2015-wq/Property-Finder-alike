@@ -1,6 +1,11 @@
 .property-card,
 .appointment-card,
 .review-card {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  min-width: 0;
+  min-height: 360px;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -9,6 +14,10 @@
   transition:
     transform 0.18s ease,
     box-shadow 0.18s ease;
+}
+
+.property-card {
+  width: min(85vw, var(--content-max));
 }
 
 .property-card:hover,
@@ -21,15 +30,39 @@
 .property-details,
 .appointment-details {
   margin-top: var(--space-3);
+  flex: 1;
+  min-width: 0;
 }
 
 .property-actions,
 .appointment-actions,
 .review-actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: var(--space-3);
   margin-top: var(--space-4);
+}
+
+.property-actions,
+.appointment-actions,
+.review-actions {
+  margin-top: auto;
+}
+
+.property-card-image {
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+
+.property-card-image-empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: var(--background);
 }
 
 .property-image {
@@ -38,4 +71,36 @@
   border-radius: var(--radius-md);
   border: 1px solid var(--line);
   object-fit: cover;
+}
+
+@media (max-width: 640px) {
+  .property-card,
+  .appointment-card,
+  .review-card {
+    min-height: 300px;
+  }
+
+  .property-card-image {
+    aspect-ratio: 1;
+  }
+}
+
+@media (min-width: 641px) {
+  .property-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 30%);
+    column-gap: var(--space-5);
+    align-items: start;
+  }
+
+  .property-card-image {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+  }
+
+  .property-card > .legend,
+  .property-card > .property-details,
+  .property-card > .property-actions {
+    grid-column: 1;
+  }
 }

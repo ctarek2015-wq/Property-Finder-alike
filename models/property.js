@@ -75,6 +75,11 @@ const propertySchema = new mongoose.Schema({
       message: "A property can have at most 10 images.",
     },
   },
+  mainImagePublicId: {
+    type: String,
+    trim: true,
+    default: "",
+  },
 
   averageRating: {
     type: Number,

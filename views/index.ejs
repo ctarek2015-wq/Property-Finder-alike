@@ -21,40 +21,32 @@
 
   <div class="property-listings" id="property-listings">
     <div class="property-card">
+      <% const homeMainImage = prop.images && prop.images.length > 0
+        ? (prop.images.find(image => image.publicId === prop.mainImagePublicId) || prop.images[0])
+        : null; %>
+      <% if (homeMainImage) { %>
+      <img class="property-card-image" src="<%= homeMainImage.url %>" alt="<%= prop.title %>">
+      <% } else { %>
+      <div class="property-card-image property-card-image-empty" aria-label="No property image">No image</div>
+      <% } %>
       <h3 class="legend"><%= prop.title %></h3>
       <div class="property-details">
         <p class="detail-item">Owner: <%= prop.owner.username %></p>
-        <p class="detail-item">Description: <%= prop.description %></p>
         <p class="detail-item">Location: <%= prop.location %></p>
         <p class="detail-item">Property Type: <%= prop.listingType %></p>
         <p class="detail-item">Price: <%= prop.price %></p>
         <p class="detail-item">Area: <%= prop.area %></p>
-        <p class="detail-item">Bedrooms: <%= prop.bedrooms %></p>
-        <p class="detail-item">Bathrooms: <%= prop.bathrooms %></p>
+        <% if(prop.available === true){ %>
+        <p class="detail-item">Available for viewings</p>
+        <% }else{ %>
+        <p class="detail-item">Not Available for viewings</p>
+        <% } %>
       </div>
 
       <div class="property-actions">
         <% if(!user){ %>
         <a href="/auth/sign-in"> <button class="btn">Please log in to view properties</button></a>
         <% }else{ %>
-        <% if(prop.available === true){ %>
-        <p class="detail-item">Available for viewings</p>
-        <% }else{ %>
-        <p class="detail-item">Not Available for viewings</p>
-        <% } %>
-        <% if(prop.availableAppointments){ %>
-        <p class="detail-item">From: <%= prop.availableAppointments.dateFrom.toISOString().split('T')[0] %></p>
-        <p class="detail-item">To: <%= prop.availableAppointments.dateTo.toISOString().split('T')[0] %></p>
-        <div class="time-slots-block">
-          <p class="detail-item">Time Slots:</p>
-          <div class="time-slot-list">
-            <% const homeSlots = Array.isArray(prop.availableAppointments.time) ? prop.availableAppointments.time : [prop.availableAppointments.time]; %>
-            <% homeSlots.forEach(slot => { %>
-            <span class="time-slot-chip"><%= slot %></span>
-            <% }) %>
-          </div>
-        </div>
-        <% } %>
 
         <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>
         <a href="/properties/<%= prop._id %>"><button class="btn">Please Leave a Review</button></a>
@@ -64,6 +56,7 @@
 
         <% } %>
       </div>
+
     </div>
 
 

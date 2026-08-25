@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Property Details</title>
   <link rel="stylesheet" href="/stylesheets/app.css" />
+  <link rel="stylesheet" href="/stylesheets/components/image-viewer.css" />
+  <script defer src="/js/image-viewer.js"></script>
 </head>
 
 <body class="page page-properties">
@@ -29,8 +31,20 @@
       <% if (property.images && property.images.length > 0) { %>
       <div class="property-image-gallery">
         <% property.images.forEach((image, index) => { %>
-        <img class="property-image" src="<%= image.url %>" alt="Property image <%= index + 1 %>">
+        <button class="gallery-thumb-button" type="button" aria-label="Enlarge property image <%= index + 1 %>">
+          <img class="property-image gallery-thumb" tabindex="0" src="<%= image.url %>" alt="<%= property.title %>, photo <%= index + 1 %>">
+        </button>
         <% }); %>
+      </div>
+      <div id="image-viewer-modal" class="image-viewer" role="dialog" aria-modal="true" aria-label="Property image viewer" hidden>
+        <div class="viewer-backdrop"></div>
+        <div class="viewer-container">
+          <button class="viewer-close" type="button" aria-label="Close image viewer">&times;</button>
+          <button class="viewer-prev" type="button" aria-label="Previous image">&#8249;</button>
+          <img class="viewer-image" src="" alt="">
+          <button class="viewer-next" type="button" aria-label="Next image">&#8250;</button>
+          <p class="viewer-counter" aria-live="polite"></p>
+        </div>
       </div>
       <% } else { %>
       <p class="no-property-image">No images available.</p>

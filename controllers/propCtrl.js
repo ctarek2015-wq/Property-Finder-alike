@@ -48,6 +48,14 @@ const pickFields = (body, fields) =>
     return values;
   }, {});
 
+const getMainImageId = (value, uploadedImages, fallback = "") => {
+  if (typeof value === "string" && value.startsWith("new:")) {
+    const index = Number(value.slice(4));
+    return uploadedImages[index]?.publicId || fallback;
+  }
+  return typeof value === "string" ? value : fallback;
+};
+
 const renderPropertyFormError = async (
   res,
   view,
@@ -83,12 +91,18 @@ const create = async (req, res) => {
     }
 
     uploadedImages = await Promise.all((req.files || []).map(uploadImage));
+    const mainImagePublicId = getMainImageId(
+      req.body.mainImagePublicId,
+      uploadedImages,
+      uploadedImages[0]?.publicId || "",
+    );
     createdAppointment = await Appointment.create(
       pickFields(req.body, appointmentFields),
     );
     await Property.create({
       ...pickFields(req.body, propertyFields),
       images: uploadedImages,
+      mainImagePublicId,
       owner: req.session.user._id,
       availableAppointments: createdAppointment._id,
     });
@@ -185,11 +199,23 @@ const update = async (req, res) => {
       );
     }
 
+    const requestedMainImage = getMainImageId(
+      req.body.mainImagePublicId,
+      uploadedImages,
+      property.mainImagePublicId,
+    );
+    const mainImagePublicId = nextImages.some(
+      (image) => image.publicId === requestedMainImage,
+    )
+      ? requestedMainImage
+      : nextImages[0]?.publicId || "";
+
     await Property.findByIdAndUpdate(
       req.params.id,
       {
         ...pickFields(req.body, propertyFields),
         images: nextImages,
+        mainImagePublicId,
       },
       { runValidators: true },
     );

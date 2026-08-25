@@ -20,6 +20,7 @@
   background: var(--c-900);
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
+  color: #ffffff;
 }
 
 .btn:active {

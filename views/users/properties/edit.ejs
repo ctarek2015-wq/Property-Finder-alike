@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Property</title>
   <link rel="stylesheet" href="/stylesheets/app.css" />
+  <script defer src="/js/property-image-picker.js"></script>
 
 </head>
 
@@ -90,16 +91,21 @@
           <label for="images">Add property images:</label>
           <input type="file" name="images" id="images" accept="image/jpeg,image/png,image/webp" multiple>
           <small class="image-upload-help">Upload up to 10 images total. New images are added to the gallery.</small>
+          <div id="image-previews" class="image-preview-gallery" aria-live="polite"></div>
           <% if (property.images && property.images.length > 0) { %>
           <div class="current-image-gallery">
             <% property.images.forEach((image, index) => { %>
-            <label class="current-image-item" for="remove-image-<%= index %>">
+            <div class="current-image-item">
               <img src="<%= image.url %>" alt="Current property image <%= index + 1 %>">
-              <span>
+              <label>
+                <input type="radio" name="mainImagePublicId" value="<%= image.publicId %>" <%= property.mainImagePublicId === image.publicId || (!property.mainImagePublicId && index === 0) ? 'checked' : '' %>>
+                Featured image
+              </label>
+              <label>
                 <input type="checkbox" name="removeImages" value="<%= image.publicId %>" id="remove-image-<%= index %>">
                 Remove image
-              </span>
-            </label>
+              </label>
+            </div>
             <% }); %>
           </div>
           <% } %>

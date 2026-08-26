@@ -1,5 +1,20 @@
 .page-home h1 {
-  margin: var(--space-2) 0;
+  margin: 0;
+}
+
+.page-home .home-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-width: var(--content-max);
+  margin: var(--space-2) auto;
+}
+
+/* hide the greeting while the filter panel is open */
+.page-home .home-header:has(.home-filter-disclosure[open]) h1 {
+  display: none;
 }
 
 .page-home .home-filter-disclosure {
@@ -21,9 +36,6 @@
   font-weight: 600;
   cursor: pointer;
   list-style: none;
-  position: absolute;
-  right: 2.5vw;
-  top: 15vh;
 }
 
 .page-home .home-filter-disclosure summary::-webkit-details-marker {
@@ -94,30 +106,6 @@
 @media (max-width: 900px) {
   .page-home .home-filter-bar {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 817px) {
-  .page-home .home-filter-disclosure summary {
-    top: 22vh;
-  }
-}
-
-@media (max-width: 720px) {
-  .page-home .home-filter-disclosure summary {
-    top: 17vh;
-  }
-}
-
-@media (max-width: 817px) {
-  .page-home .home-filter-disclosure summary {
-    top: 22vh;
-  }
-}
-
-@media (max-width: 720px) {
-  .page-home .home-filter-disclosure summary {
-    top: 17vh;
   }
 }
 

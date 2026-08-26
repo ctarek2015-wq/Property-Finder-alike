@@ -1,54 +1,73 @@
-const fallbackImageSets = [
-  [
-    "https://imgs.search.brave.com/zbZgWFkh9JztzH2AVfaBiCkFnXDAN9QvodMPxnugs8g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5pc3RvY2twaG90/by5jb20vaWQvMTQxMDcwMDQ4Mi9waG90/by9iZWF1dGlmdWwtZmFtaWx5LWhvdXNlLW9uLXRoZS1oaWxsLWV4dGVyaW9yLXZpZXctb2YtYS1tb2Rlcm4taG91c2UuanBnP3M9NjEyeDYxMiZ3PTAmaz0yMCZjPVVDc2tGOTFJYVZDMmZ4ZnF3TzVGbXF3dDhuVmhSSWtsWS1rSHd5bzlROHM9",
-    "https://imgs.search.brave.com/M4oSIhEmzF8ttjIojbpq-6BV_FumZv8pCKqRHOLKZPQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iLzBoTzI1/dVE5eFF2dGhZRVM3/MVh6WUNhRHFHaz0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpOmZv/cm1hdCh3ZWJwKS9C/ZWRyb29tc0xlYW5u/ZUZvcmRJbnRlcmlv/cnMtOWMyYTQ0YTE2/NDU2NDRiMjgyNzc4/ZWUyYjdkMWI5ZmMu/anBlZw",
-    "https://imgs.search.brave.com/W4ZU4gA2N9qorssH8BHw6s4aqHogo6-dpcHYe3WZPQg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTE2/MTE2MjQxNy9waG90/by92aWV3LW9mLXRo/ZS1raXRjaGVuLWFu/ZC1iYXItaW4tYS1z/bWFsbC1ob3RlbC1y/b29tLXN0dWRpby5q/cGc_cz02MTJ4NjEy/Jnc9MCZrPTIwJmM9/NDhGWTlBOUZTbDZs/ay16SWxqUzZic3F1/NVZJMmpnV0Y0V2lQ/UnhWOU5TUT0",
-    "https://imgs.search.brave.com/GKC7Y0KRcZJu-O0FwB7Xr2KNxgvjVT87ekao-o5CAKE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iL0RhLTBV/WjlTNThCbTl3NWxw/VTJfa0U5ZnhLbz0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpOmZv/cm1hdCh3ZWJwKS9h/ZjFiZTNfN2YxNWEy/YTA5NjA0NDAyZGEw/MTJkMmE1MTMzZjEw/ZThtdjItZDgyMTY4/ZWU2OTRlNGJlZGIx/M2E0YWUzMzAxNDlj/MDUuanBlZw",
-  ],
-  [
-    "https://imgs.search.brave.com/weG_AW89GoNwjHF27GMT_ATXTTEtFiQKhi55tlo7AMo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTQ0NzcwODUxOC9waG90/by9tb2Rlcm4tdmls/bGEtZXh0ZXJpb3It/aW4tc3VtbWVyLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1l/S0JXWUktNk1WR1Ju/QV9hc1RTYmlyaWdN/THNkQlN6aUdQTVNx/RlBFcF9FPQ",
-    "https://imgs.search.brave.com/5OoP1PNpCI0_VHn_Q3ndvx_R1EfhYaXLu9vnRx9bo1I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5ob3VzZWFuZGdh/cmRlbi5jby51ay9w/aG90b3MvNjVmMDI2/NjQ5NzU3ZTNlNTEz/ZThjYmVhLzE6MS93/XzY0MCxjX2xpbWl0/L1dpbGtpbnNvbl8z/LmpwZw",
-    "https://imgs.search.brave.com/thBOnc1M9oMuzV-_6vDIZLgIhYuzuxP5nPH9OTnRp9Y/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMTQ0OTY4MTQzNS9waG90/by9sdXh1cnktYXBh/cnRtZW50LmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz02Tkg3/SUl2ekVHaEpNRXV4/YWVWdGgxS1hOMGg2/TVNKQ29ORml3cTM4/Mk1FPQ",
-    "https://imgs.search.brave.com/6sldFA_u3WCstDZWy8F0EQKPsCwLSFXzlEcWpRD8KW8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0aW1hZ2VzLmNvbS9pZC8xMzQ2NjMxNDc5L3Bob3RvL2VtcHR5LWJhdGhyb29tLmpwZz9zPTYxMng2MTImdz0wJms9MjAmYz1yZnpGTkdwOXhPMl92Yng2NmI4ME5ENk5vTl9ha2ZxVjZENjVOamZvVl9mVT0",
-  ],
-  [
-    "https://imgs.search.brave.com/FecIWp5aAeNfHOpKJfZeBmhYR-rFszPs3NToc5N0B-s/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAyLzk3LzYwLzY2/LzM2MF9GXzI5NzYwNjY3N19KV1RKRzd5/aDRDYlM5Zk9nb3ZUcTFHZEFCRzQ1UVM2YS5qcGc",
-    "https://imgs.search.brave.com/sZfU1fRfNzjSPGwTi2uE7ZC21cmk2CeVty2HTvA62q4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5ob3VzZWFuZGdh/cmRlbi5jby51ay9waG90b3MvNjE4OTNlMDE2MmI3MzdhYmFiY2ExMWJjL21hc3Rlci93XzEwMjQsY19saW1pdC8yODUxNDI0LWhvdXNlLTE2bWF5MTYtU2ltb24tQnJvd25fYl8xLmpwZw",
-    "https://imgs.search.brave.com/IsSqvHwdGt1uAKQ89AYrS_jm4M2d5Uv_cz7exdRrZHM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5ob3VzZWFuZGdh/cmRlbi5jby51ay9waG90b3MvNjZjNWNjYzYwNGU2OWFhMzQ0ZDc5ZTNlL21hc3Rlci93XzEwMjQsY19saW1pdC8yMzA4MDdIR0hhSGFIb3VzZTA1OEJJVHNSR0ItcHJvZHVjdGlvbl9kaWdpdGFsLmpwZw",
-    "https://imgs.search.brave.com/t6FCFsbIXLoey7MyLLgok1YUpBJpKc2ElGdWvyID720/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRpYS5pc3RvY2twaG90/by5jb20vaWQvMTMxMjE0MzYzNC9waG90/by9tb2Rlcm4tc21h/bGwtYmF0aHJvb20t/aW50ZXJpb3ItZGVz/aWduLmpwZz9zPTYx/Mng2MTImdz0wJms9MjAmYz10Ti1sdTE5UC1TdW5yYnBIbXN0aExLWnRfRVY3Ymh5TUhaMjZ6SlE2MW40PQ",
-  ],
-  [
-    "https://imgs.search.brave.com/UlRXTaDfAhf9VYetMc1H2LyNFto9EG7oiQZr7XqrvPE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tcGhv/dG8vaG91c2Utd2l0/aC1sb3Qtd2luZG93/cy10aGF0LXNheS1j/aHJpc3RtYXMtc2lk/ZV8xMTAzMjkwLTE0/OTc5OS5qcGc_c2Vt/dD1haXNfaHlicmlk/Jnc9NzQwJnE9ODA",
-    "https://imgs.search.brave.com/H06ax64gbIi4e3EtkA2YVN3z5SKgKLY6mgGaDqcTdCs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/bW9zLmNtcy5mdXR1/cmVjZG4ubmV0L3ZQ/OGNkcUFSV01vc1dz/OFpqalE1SkUuanBn",
-    "https://imgs.search.brave.com/TrT2ZBiD6LOc2fVaEGoZ9TtmjXwH9rTIiB0E7ID5C34/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVl/ZXp5LmNvbS9zeXN0ZW0vcmVzb3VyY2VzL3RodW1ibmFpbHMvMDI1LzM1OC8wNzgv c21hbGwvc3RvY2stb2YtYS1tb2Rlcm4tc2ltcGxpc3RpYy1raXRjaGVuLW9mLWEtc2NhbmRpbmF2aWFuZ3JhcGh5LWdlbmVyYXRpdmUtYWktcGhvdG8uanBn",
-    "https://imgs.search.brave.com/evF1wey8AlZOgQQJ5jAke3jqmvAXqMZ5A4s1fTZFeVQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cuc291dGhlcm5saXZpbmcuY29tL3RobWIvLUNoMEJLOEpocGdwRUlWZ0o4UmhNTFhNUENRPS8xNTAweDAvZmlsdGVyczpub191cHNjYWxlKCk6bWF4X2J5dGVzKDE1MDAwMCk6c3RyaXBfaWNjKCkvMjU4MTUwMV9oZWF0aF8xNDY2LTIwMDAtNzk4YTE2Nzc4OWYyNGJmMzg3ZTMwYTdhZDI4M2NkYjQuanBn",
-  ],
-  [
-    "https://imgs.search.brave.com/BtfFLGan-JfuOXM2svXw5C6NBZRHE6YLYFcZL_FUjJk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzL2ZhLzBi/LzU5L2ZhMGI1OTQ1NGE4OTU3OGM1OGQwOTU2MDMyODA0MjBhLmpwZw",
-    "https://imgs.search.brave.com/rnJU23U1q2AC8xnTX8Eqe1gsbdoN0_92eBgUXl_7V30/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/ZmFycm93LWJhbGwu/Y29tL21lZGlhL3d5/c2l3ZWcvR3JleS1i/ZWRyb29tcy5qcGc",
-    "https://imgs.search.brave.com/LrX4sj8Drd8B35L8D4kOfqgQ-ovdEkRws5mVr_bItuM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTcx/MzQzOTg4L3Bob3Rv/L21vZGVybi1raXRj/aGVuLmpwZz9zPTYx/MngxNjEyJnc9MCZr/PTIwJmM9cDJFV1d1/dHFpMkNHSVZwUGVl/V205bXVyUUF0OTBN/QzZsd2daSDI2ZWtB/bz0",
-    "https://imgs.search.brave.com/J0je4eCtVeJz4vu6wE4MXc5jUqsk2cU1F5_5MwN46d0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/dGhlc3BydWNlLmNv/bS90aG1iL0F0SGJG/QTZSZWcyc0xwMEs0/TktzcHU4aFFYZz0v/MTUwMHgwL2ZpbHRl/cnM6bm9fdXBzY2Fs/ZSgpOm1heF9ieXRl/cygxNTAwMDApOnN0/cmlwX2ljYygpOmZv/cm1hdCh3ZWJwKS9C/ZWNjYUludGVyaW9y/c05ZV2VzdGNoZXN0/ZXJDb3R0YWdlMTQt/NjMxZWVlYTAxM2Nm/NGQzYmJjMWZkNjdk/MGVjMmVmMWQtMjg3/MzhmNzNkN2Y1NGIy/ODllZGRiYTA3NTdl/YzE0NzUuanBn",
-  ],
+const imageUrls = [
+  "https://plus.unsplash.com/premium_photo-1661915661139-5b6a4e4a6fcc",
+  "https://images.unsplash.com/photo-1613490493576-7fde63acd811",
+  "https://images.unsplash.com/photo-1721815693498-cc28507c0ba2",
+  "https://images.unsplash.com/photo-1628012209120-d9db7abf7eab",
+  "https://plus.unsplash.com/premium_photo-1661963657305-f52dcaeef418",
+  "https://images.unsplash.com/photo-1670589953882-b94c9cb380f5",
+  "https://images.unsplash.com/photo-1628745277862-bc0b2d68c50c",
+  "https://images.unsplash.com/photo-1627141234469-24711efb373c",
+  "https://plus.unsplash.com/premium_photo-1682377521625-c656fc1ff3e1",
+  "https://images.unsplash.com/photo-1706808849780-7a04fbac83ef",
+  "https://images.unsplash.com/photo-1649083048337-4aeb6dda80bb",
+  "https://images.unsplash.com/photo-1628744448840-55bdb2497bd4",
+  "https://plus.unsplash.com/premium_photo-1661883964999-c1bcb57a7357",
+  "https://images.unsplash.com/photo-1649083048770-82e8ffd80431",
+  "https://images.unsplash.com/photo-1628744876497-eb30460be9f6",
+  "https://images.unsplash.com/photo-1722421492323-eaf9c401befe",
+  "https://plus.unsplash.com/premium_photo-1661876449499-26de7959878f",
+  "https://images.unsplash.com/photo-1698994705178-d244d73ea573",
+  "https://images.unsplash.com/photo-1614255976202-8ce52bfcb655",
+  "https://images.unsplash.com/photo-1691425700585-c108acad6467",
+  "https://images.unsplash.com/photo-1580587771525-78b9dba3b914",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750",
+  "https://images.unsplash.com/photo-1568605114967-8130f3a36994",
+  "https://plus.unsplash.com/premium_photo-1682377521753-58d1fd9fa5ce",
+  "https://images.unsplash.com/photo-1613977257365-aaae5a9817ff",
+  "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf",
+  "https://images.unsplash.com/photo-1688653802629-5360086bf632",
+  "https://plus.unsplash.com/premium_photo-1682377521552-49d35c2c9704",
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9",
+  "https://images.unsplash.com/photo-1623298317883-6b70254edf31",
+  "https://images.unsplash.com/photo-1564013799919-ab600027ffc6",
+  "https://plus.unsplash.com/premium_photo-1661913412680-c274b6fea096",
+  "https://images.unsplash.com/photo-1613977257592-4871e5fcd7c4",
+  "https://images.unsplash.com/photo-1593714604578-d9e41b00c6c6",
+  "https://plus.unsplash.com/premium_photo-1733306523667-80d5e5668631",
+  "https://images.unsplash.com/photo-1564501049412-61c2a3083791",
+  "https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f",
+  "https://images.unsplash.com/photo-1716807335226-dfe1e2062db1",
+  "https://plus.unsplash.com/premium_photo-1684175656320-5c3f701c082c",
+  "https://images.unsplash.com/photo-1515263487990-61b07816b324",
+  "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688",
+  "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267",
+  "https://plus.unsplash.com/premium_photo-1676321046262-4978a752fb15",
+  "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00",
+  "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2",
+  "https://images.unsplash.com/photo-1580216643062-cf460548a66a",
+  "https://plus.unsplash.com/premium_photo-1671196048754-03a77d051dcb",
+  "https://images.unsplash.com/photo-1484154218962-a197022b5858",
+  "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92",
+  "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd",
+  "https://plus.unsplash.com/premium_photo-1674676471417-07f613528a94",
+  "https://images.unsplash.com/photo-1628592102751-ba83b0314276",
+  "https://images.unsplash.com/photo-1493809842364-78817add7ffb",
+  "https://images.unsplash.com/photo-1460317442991-0ec209397118",
+  "https://plus.unsplash.com/premium_photo-1676823547752-1d24e8597047",
+  "https://images.unsplash.com/photo-1580041065738-e72023775cdc",
+  "https://images.unsplash.com/photo-1613575831056-0acd5da8f085",
+  "https://images.unsplash.com/photo-1624204386084-dd8c05e32226",
+  "https://plus.unsplash.com/premium_photo-1675537843200-78c1a0ea1736",
+  "https://images.unsplash.com/photo-1615874959474-d609969a20ed",
 ];
 
-const suppliedImageUrls = require("fs")
-  .readFileSync(require("path").join(__dirname, "../img-url.md"), "utf8")
-  .split("\n")
-  .filter((line) => line.startsWith("https://"))
-  .map((line) => line.replace(/\s+/g, ""));
-
-const imageSets = Array.from({ length: 5 }, (_, setIndex) =>
-  suppliedImageUrls.slice(setIndex * 4, setIndex * 4 + 4),
-);
-
-const createImages = (propertyNumber) => {
-  const imageSet = imageSets[(propertyNumber - 1) % imageSets.length];
-
-  return imageSet.map((url, imageIndex) => ({
-    url,
-    publicId: `mock-property-${propertyNumber}-photo-${imageIndex + 1}`,
-  }));
-};
+const createImages = (propertyNumber) =>
+  imageUrls
+    .slice((propertyNumber - 1) * 4, propertyNumber * 4)
+    .map((url, imageIndex) => ({
+      url: `${url}?auto=format&fit=crop&w=1200&h=800&q=80`,
+      publicId: `mock-property-${propertyNumber}-photo-${imageIndex + 1}`,
+    }));
 
 const properties = [
   {
@@ -58,7 +77,7 @@ const properties = [
     description:
       "A spacious seafront villa with bright living areas, a private garden, and views across the water.",
     listingType: "sale",
-    price: 122500,
+    price: 61250,
     location: "manama",
     area: 320,
     bedrooms: 4,
@@ -72,7 +91,7 @@ const properties = [
     description:
       "A modern townhouse close to local shops and cafes, with flexible space for family living.",
     listingType: "rent",
-    price: 475,
+    price: 237.5,
     location: "muharraq",
     area: 210,
     bedrooms: 3,
@@ -86,7 +105,7 @@ const properties = [
     description:
       "A calm family home in a quiet neighborhood with generous bedrooms and a landscaped garden.",
     listingType: "sale",
-    price: 89000,
+    price: 44500,
     location: "rifaa",
     area: 260,
     bedrooms: 4,
@@ -255,19 +274,18 @@ for (const [index, data] of extraProperties.entries()) {
     bedrooms,
     bathrooms,
   ] = data;
-  const propertyNumber = index + 4;
   properties.push({
     title,
     ownerName,
     ownerEmail,
     description,
     listingType,
-    price: price / 2,
+    price: price / 4,
     location,
     area,
     bedrooms,
     bathrooms,
-    images: createImages(propertyNumber),
+    images: createImages(index + 4),
   });
 }
 

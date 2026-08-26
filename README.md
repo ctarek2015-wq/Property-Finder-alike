@@ -1,6 +1,21 @@
+<p align="center">
+  <img src="./public/logo/logo.jpeg" alt="PropertySeeker logo" width="600">
+</p>
+
 # PropertySeeker
 
-![Property detail page wireframe](./public/wireframe/property-page.png)
+## Screenshots
+
+<table>
+  <tr>
+    <td><img src="./public/screenShots/homepage.png" alt="PropertySeeker home page"></td>
+    <td><img src="./public/screenShots/newproppage.png" alt="New property page"></td>
+  </tr>
+  <tr>
+    <td><img src="./public/screenShots/profilepage.png" alt="PropertySeeker profile page"></td>
+    <td><img src="./public/screenShots/signuppage.png" alt="PropertySeeker sign-up page"></td>
+  </tr>
+</table>
 
 PropertySeeker is a real estate marketplace for people looking to buy or rent
 homes in Bahrain. Seekers can browse and filter listings, inspect property
@@ -104,8 +119,9 @@ password `MockOwner123!`; their emails are listed in
 
 - [Google Fonts](https://fonts.google.com/) provides the Manrope and Space
   Grotesk typefaces used by the interface.
-- Brave image-search result URLs provide the remote demo property images used by
-  the mock property data. Image rights remain subject to each original source.
+- [Unsplash](https://unsplash.com/) provides the fixed remote demo property
+  images used by the mock property data. Image rights remain subject to the
+  original photographers' terms.
 - [Cloudinary](https://cloudinary.com/) provides image hosting and delivery for
   uploaded property media.
 

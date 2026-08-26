@@ -54,7 +54,11 @@ const updateProfilePic = async (req, res) => {
       await cloudinary.uploader.destroy(previousPublicId).catch(() => {});
     }
 
-    res.redirect("/profile");
+    req.session.user.profileImage = uploaded;
+    req.session.save(() => {
+      res.redirect("/profile");
+    });
+    return;
   } catch (err) {
     renderProfile(res, user, { errors: ["Unable to update profile picture."] });
   }

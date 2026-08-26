@@ -20,7 +20,11 @@
       <% } %>
 
       <a class="nav-role" href="/profile">
-        <img class="profile-icon" src="/images/<%= user.role %>-icon.png" alt="<%= user.role %> icon">
+        <% if (user.profileImage && user.profileImage.url) { %>
+        <img class="profile-icon" src="<%= user.profileImage.url %>" alt="Profile picture">
+        <% } else { %>
+        <span class="profile-icon profile-icon-fallback" aria-hidden="true"></span>
+        <% } %>
         <%= user.role %>
       </a>
       <a href="/auth/sign-out">Sign Out</a>

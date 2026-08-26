@@ -123,6 +123,7 @@ const register = async (req, res) => {
       username: createUser.username,
       role: createUser.role,
       _id: createUser._id,
+      profileImage: createUser.profileImage,
     };
     req.session.save(() => {
       res.redirect("/");
@@ -173,6 +174,7 @@ const login = async (req, res) => {
       username: userExists.username,
       role: userExists.role,
       _id: userExists._id,
+      profileImage: userExists.profileImage,
     };
 
     req.session.save(() => {

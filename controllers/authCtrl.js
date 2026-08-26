@@ -2,6 +2,7 @@ const User = require("../models/users");
 const bcrypt = require("bcryptjs");
 const SALT_ROUNDS = 10;
 const sendWelcomeEmail = require("../services/sendWelcomeEmail");
+const uploadImageToCloudinary = require("../services/uploadImageToCloudinary");
 
 const renderAuthError = (res, view, error, body) => {
   const oldInput = {
@@ -37,6 +38,15 @@ const register = async (req, res) => {
         res,
         "auth/sign-up.ejs",
         "All fields are required.",
+        req.body,
+      );
+    }
+
+    if (req.uploadError) {
+      return renderAuthError(
+        res,
+        "auth/sign-up.ejs",
+        req.uploadError,
         req.body,
       );
     }
@@ -84,6 +94,23 @@ const register = async (req, res) => {
 
     const hashed = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
     req.body.password = hashed;
+
+    if (req.file) {
+      try {
+        req.body.profileImage = await uploadImageToCloudinary(
+          req.file,
+          "profiles",
+        );
+      } catch (uploadErr) {
+        return renderAuthError(
+          res,
+          "auth/sign-up.ejs",
+          "Could not upload profile picture.",
+          req.body,
+        );
+      }
+    }
+
     // if yes, create new user, redirect home page
     const createUser = await User.create(req.body);
 

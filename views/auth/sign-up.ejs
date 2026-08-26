@@ -12,7 +12,7 @@
   <%- include('../partials/_navbar') %>
   <%- include('../partials/_errors.ejs', { errors: errors || [] }) %>
   <h1>Create a new account!</h1>
-  <form action="/auth/sign-up" method="POST" id="sign-up-form" class="auth-form">
+  <form action="/auth/sign-up" method="POST" id="sign-up-form" class="auth-form" enctype="multipart/form-data">
     <div class="form-group">
       <label for="username">Username:</label>
       <input type="text" name="username" id="username" value="<%= oldInput.username || '' %>" required />
@@ -31,6 +31,11 @@
     <div class="form-group">
       <label for="confirmPassword">Confirm Password:</label>
       <input type="password" name="confirmPassword" id="confirmPassword" required />
+    </div>
+
+    <div class="form-group">
+      <label for="profileImage">Profile picture (optional):</label>
+      <input type="file" name="profileImage" id="profileImage" accept="image/png, image/jpeg, image/webp" />
     </div>
 
     <div class="form-section role-section">

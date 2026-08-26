@@ -30,7 +30,21 @@ const uploadImages = (req, res, next) => {
   });
 };
 
+const uploadProfilePic = (req, res, next) => {
+  upload.single("profileImage")(req, res, (error) => {
+    if (error) {
+      req.uploadError =
+        error.code === "LIMIT_FILE_SIZE"
+          ? "Profile image must be 5 MB or smaller."
+          : error.message;
+    }
+
+    return next();
+  });
+};
+
 module.exports = {
   upload,
   uploadImages,
+  uploadProfilePic,
 };

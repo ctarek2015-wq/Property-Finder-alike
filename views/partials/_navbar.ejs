@@ -19,9 +19,10 @@
       <a href="/appointments">My Viewings</a>
       <% } %>
 
-      <span class="nav-role">
+      <a class="nav-role" href="/profile">
         <img class="profile-icon" src="/images/<%= user.role %>-icon.png" alt="<%= user.role %> icon">
-        <%= user.role %></span>
+        <%= user.role %>
+      </a>
       <a href="/auth/sign-out">Sign Out</a>
       <% } else { %>
       <a href="/auth/sign-up">Sign Up</a>

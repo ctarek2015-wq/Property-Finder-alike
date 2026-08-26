@@ -1,6 +1,8 @@
 const Viewing = require("../models/viewing");
 const Property = require("../models/property");
 const Review = require("../models/review");
+const User = require("../models/users");
+const sendAppointmentNotification = require("../services/sendAppointmentNotification");
 
 const index = async (req, res) => {
   try {
@@ -48,6 +50,24 @@ const create = async (req, res) => {
     newViewing.propertyId = req.query.propertyId;
     newViewing.ownerId = prop.owner._id;
     await newViewing.save();
+
+    try {
+      const owner = await User.findById(prop.owner);
+      if (owner) {
+        await sendAppointmentNotification({
+          owner,
+          seeker: req.session.user,
+          property: prop,
+          viewing: newViewing,
+        });
+      }
+    } catch (emailError) {
+      console.log(
+        "Booking notification email could not be sent:",
+        emailError.message,
+      );
+    }
+
     res.redirect(`/appointments`);
   } catch (err) {
     console.error(err.message);

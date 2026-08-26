@@ -25,6 +25,18 @@ const userSchema = new mongoose.Schema({
     enum: ["owner", "seeker"],
     default: "owner",
   },
+  profileImage: {
+    url: { type: String, default: "" },
+    publicId: { type: String, default: "" },
+  },
+  resetPasswordCode: {
+    type: String,
+    default: null,
+  },
+  resetPasswordExpires: {
+    type: Date,
+    default: null,
+  },
 });
 
 // init the model

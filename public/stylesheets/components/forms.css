@@ -9,6 +9,10 @@
   padding: var(--space-5);
 }
 
+.property-form {
+  margin-top: 10px;
+}
+
 .form-section,
 .form-subsection {
   margin-bottom: var(--space-4);

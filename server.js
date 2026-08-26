@@ -18,6 +18,7 @@ const pagesRouter = require("./routers/pagesRouter");
 const propRouter = require("./routers/propRouter");
 const appointmentRouter = require("./routers/appointmentRouter");
 const reviewRouter = require("./routers/reviewRouter");
+const profileRouter = require("./routers/profileRouter");
 // Custom Middlewares
 const isSignedIn = require("./middlewares/isSignedIn");
 const addUserToViews = require("./middlewares/addUserToViews");
@@ -51,6 +52,7 @@ app.use(isSignedIn);
 app.use("/properties", propRouter);
 app.use("/appointments", appointmentRouter);
 app.use("/reviews", reviewRouter);
+app.use("/profile", profileRouter);
 
 //port listening
 if (process.env.NODE_ENV !== "production") {

@@ -5,3 +5,7 @@
 .page-appointments .action-form {
   margin: 0;
 }
+
+.page-appointments h1 {
+  margin: var(--space-2) auto;
+}

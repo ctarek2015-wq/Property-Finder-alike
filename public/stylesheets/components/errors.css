@@ -1,0 +1,6 @@
+.error-banner {
+  background-color: palevioletred;
+  color: white;
+  padding: var(--space-2);
+  font-weight: bold;
+}

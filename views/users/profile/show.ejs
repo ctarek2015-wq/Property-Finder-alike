@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Profile</title>
+  <link rel="stylesheet" href="/stylesheets/app.css" />
+</head>
+
+<body class="page page-profile">
+  <%- include('../../partials/_navbar') %>
+  <%- include('../../partials/_errors.ejs', { errors: errors || [] }) %>
+  <% if (message) { %>
+  <p class="profile-message"><%= message %></p>
+  <% } %>
+
+  <h1>Your Profile</h1>
+
+  <section class="profile-section">
+    <h2 class="legend">Account details</h2>
+    <p class="detail-item"><strong>Username:</strong> <%= profileUser.username %></p>
+    <p class="detail-item"><strong>Email:</strong> <%= profileUser.email %></p>
+    <p class="detail-item"><strong>Role:</strong> <%= profileUser.role %></p>
+  </section>
+
+  <section class="profile-section">
+    <h2 class="legend">Profile picture</h2>
+    <% if (profileUser.profileImage && profileUser.profileImage.url) { %>
+    <img class="profile-picture-preview" src="<%= profileUser.profileImage.url %>" alt="Current profile picture">
+    <% } else { %>
+    <p class="detail-item">No profile picture uploaded yet.</p>
+    <% } %>
+    <form action="/profile/profile-pic" method="POST" enctype="multipart/form-data" class="profile-form">
+      <div class="form-group">
+        <label for="profileImage">Choose a new picture</label>
+        <input type="file" name="profileImage" id="profileImage" accept="image/png, image/jpeg, image/webp" required />
+      </div>
+      <button type="submit" class="btn btn-submit">Update picture</button>
+    </form>
+  </section>
+
+  <section class="profile-section">
+    <h2 class="legend">Change password</h2>
+    <form action="/profile/password/send-code" method="POST" class="profile-form">
+      <button type="submit" class="btn">Email me a verification code</button>
+    </form>
+
+    <form action="/profile/password/verify" method="POST" class="profile-form">
+      <div class="form-group">
+        <label for="code">Verification code</label>
+        <input type="text" name="code" id="code" maxlength="8" required />
+      </div>
+      <div class="form-group">
+        <label for="newPassword">New password</label>
+        <input type="password" name="newPassword" id="newPassword" required />
+      </div>
+      <div class="form-group">
+        <label for="confirmNewPassword">Confirm new password</label>
+        <input type="password" name="confirmNewPassword" id="confirmNewPassword" required />
+      </div>
+      <button type="submit" class="btn btn-submit">Update password</button>
+    </form>
+  </section>
+</body>
+
+</html>

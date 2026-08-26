@@ -12,6 +12,10 @@ const { MongoStore } = require("connect-mongo");
 const methodOverride = require("method-override");
 const morgan = require("morgan");
 const port = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === "production";
+if (isProduction) {
+  app.set("trust proxy", 1);
+}
 // Routers
 const authRouter = require("./routers/authRouter");
 const pagesRouter = require("./routers/pagesRouter");
@@ -35,6 +39,11 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
     }),
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: isProduction,
+    },
   }),
 );
 app.use(morgan("dev"));

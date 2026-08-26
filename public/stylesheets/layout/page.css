@@ -46,6 +46,7 @@ body {
   flex-direction: column;
   gap: var(--space-4);
   align-items: stretch;
+  top: 0;
 }
 
 @media (max-width: 640px) {

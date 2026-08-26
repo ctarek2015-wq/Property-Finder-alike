@@ -1,6 +1,6 @@
 <nav class="site-nav" aria-label="Global navigation">
   <div class="nav-inner">
-    <a class="nav-brand" href="/">PropertyFinder</a>
+    <a class="nav-brand" href="/">PropertySeeker</a>
 
     <input class="nav-menu-toggle" type="checkbox" id="nav-menu-toggle" />
     <label class="nav-toggle" for="nav-menu-toggle" aria-label="Toggle navigation menu">
@@ -19,7 +19,9 @@
       <a href="/appointments">My Viewings</a>
       <% } %>
 
-      <span class="nav-role"><%= user.role %> account</span>
+      <span class="nav-role">
+        <img class="profile-icon" src="/images/<%= user.role %>-icon.png" alt="<%= user.role %> icon">
+        <%= user.role %></span>
       <a href="/auth/sign-out">Sign Out</a>
       <% } else { %>
       <a href="/auth/sign-up">Sign Up</a>

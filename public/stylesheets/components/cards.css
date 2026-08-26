@@ -89,9 +89,9 @@
 @media (min-width: 641px) {
   .property-card {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(180px, 30%);
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 40%);
     column-gap: var(--space-5);
-    align-items: start;
+    align-items: center;
   }
 
   .property-card-image {

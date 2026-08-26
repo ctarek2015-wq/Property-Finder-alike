@@ -6,6 +6,7 @@
   border-bottom: 1px solid rgba(202, 240, 248, 0.35);
   box-shadow: var(--shadow-nav);
   backdrop-filter: blur(4px);
+  
 }
 
 .nav-inner {
@@ -99,7 +100,7 @@ a:hover {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 996px) {
   .nav-inner {
     flex-wrap: wrap;
     align-items: center;

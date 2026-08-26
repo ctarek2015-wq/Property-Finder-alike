@@ -87,6 +87,7 @@
 
   <div class="property-listings" id="property-listings">
     <div class="property-card">
+      <% /* Prefer configured main image */ %>
       <% const homeMainImage = prop.images && prop.images.length > 0
         ? (prop.images.find(image => image.publicId === prop.mainImagePublicId) || prop.images[0])
         : null; %>
@@ -114,6 +115,7 @@
         <a href="/auth/sign-in"> <button class="btn">Please log in to view properties</button></a>
         <% }else{ %>
 
+        <% /* Offer review after completed viewing */ %>
         <% if(seekerViewings && seekerViewings.some(viewing => viewing.propertyId.toString() === prop._id.toString() && viewing.status.toString() === 'completed')&& userReviews.some(review=> review.propertyId.toString() === prop._id.toString() && !review.reviewed)){ %>
         <a href="/properties/<%= prop._id %>"><button class="btn">Please Leave a Review</button></a>
         <% }else{ %>

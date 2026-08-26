@@ -123,6 +123,7 @@ const validateProperty = (req, res, next) => {
   }
 
   if (req.method === "POST" && (!req.files || req.files.length === 0)) {
+    // Require images for new properties
     errors.push("At least one image is required.");
   }
 
@@ -140,6 +141,7 @@ const validateProperty = (req, res, next) => {
     req.validationErrors = errors;
   }
 
+  // Normalize accepted input
   if (!isBlank(body.title)) req.body.title = String(body.title).trim();
   if (!isBlank(body.description))
     req.body.description = String(body.description).trim();

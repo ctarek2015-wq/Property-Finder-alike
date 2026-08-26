@@ -127,6 +127,7 @@ a:hover {
     padding-top: 0;
   }
 
+  /* Reveal mobile navigation */
   .nav-menu-toggle:checked ~ .nav-links {
     max-height: 600px;
     opacity: 1;

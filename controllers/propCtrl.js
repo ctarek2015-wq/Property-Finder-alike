@@ -24,6 +24,7 @@ const uploadImage = (file) =>
 const deleteImage = (publicId) =>
   publicId ? cloudinary.uploader.destroy(publicId) : Promise.resolve();
 
+// Remove uploaded images
 const deleteImages = async (images) => {
   await Promise.all(images.map((image) => deleteImage(image.publicId)));
 };
@@ -108,6 +109,7 @@ const create = async (req, res) => {
     });
     res.redirect("/properties");
   } catch (err) {
+    // Roll back external resources
     await deleteImages(uploadedImages).catch(() => {});
     if (createdAppointment) {
       await Appointment.findByIdAndDelete(createdAppointment._id).catch(
@@ -187,6 +189,7 @@ const update = async (req, res) => {
       (image) => !removeImages.includes(image.publicId),
     );
     uploadedImages = await Promise.all((req.files || []).map(uploadImage));
+    // Merge retained and new images
     const nextImages = [...retainedImages, ...uploadedImages];
     if (nextImages.length > 10) {
       await deleteImages(uploadedImages);
@@ -228,6 +231,7 @@ const update = async (req, res) => {
     await deleteImages(removedImages);
     res.redirect(`/properties/${property._id}`);
   } catch (err) {
+    // Remove failed uploads
     if (!propertySaved) await deleteImages(uploadedImages).catch(() => {});
     const property = await Property.findById(req.params.id)
       .populate("availableAppointments")

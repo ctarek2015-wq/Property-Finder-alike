@@ -30,7 +30,7 @@ const register = async (req, res) => {
       });
     }
 
-    // verify all fields are not empty
+    // Validate required fields
     const { username, email, password, confirmPassword } = req.body;
 
     if (!username || !email || !password || !confirmPassword) {
@@ -51,8 +51,7 @@ const register = async (req, res) => {
       );
     }
 
-    //verify if the user name exists
-    //if the uer exists , send err msg
+    // Check duplicate role email
     const ownerExists = await User.findOne({
       email: req.body.email,
       role: "owner",
@@ -80,8 +79,7 @@ const register = async (req, res) => {
       );
     }
 
-    //else check the pw match
-    // else send err msg
+    // Validate matching passwords
     if (req.body.password !== req.body.confirmPassword) {
       return renderAuthError(
         res,
@@ -90,8 +88,7 @@ const register = async (req, res) => {
         req.body,
       );
     }
-    //encrypt the pw
-
+    // Hash the password
     const hashed = bcrypt.hashSync(req.body.password, SALT_ROUNDS);
     req.body.password = hashed;
 
@@ -111,7 +108,7 @@ const register = async (req, res) => {
       }
     }
 
-    // if yes, create new user, redirect home page
+    // Create user and session
     const createUser = await User.create(req.body);
 
     try {
@@ -151,7 +148,7 @@ const login = async (req, res) => {
       role: req.body.role,
     });
 
-    //allow user if exists
+    // Reject unknown accounts
     if (!userExists) {
       return renderAuthError(
         res,
@@ -160,7 +157,7 @@ const login = async (req, res) => {
         req.body,
       );
     }
-    //make sure if user pw matches the db pw (compare)
+    // Compare hashed passwords
     if (!bcrypt.compareSync(req.body.password, userExists.password)) {
       return renderAuthError(
         res,

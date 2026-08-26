@@ -17,6 +17,7 @@
   <% }else{ %>
 
   <div id="appointments-list" class="appointments-list">
+    <% /* Show only user's viewings */ %>
     <% viewings.forEach(viewing => { 
     if(viewing.viewerId._id.toString() === user._id || viewing.ownerId._id.toString() === user._id){ %>
 

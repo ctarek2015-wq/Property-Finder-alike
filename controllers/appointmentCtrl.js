@@ -26,6 +26,7 @@ const newAppointment = async (req, res) => {
   const time = prop.availableAppointments.time;
   const daysAvailable = (dateTo - dateFrom) / (1000 * 60 * 60 * 24);
   let availableDates = [];
+  // Build selectable appointment dates
   for (let i = 0; i <= daysAvailable; i++) {
     const date = new Date(dateFrom);
     date.setDate(date.getDate() + i);
@@ -85,6 +86,7 @@ const edit = async (req, res) => {
     const time = prop.availableAppointments.time;
     const daysAvailable = (dateTo - dateFrom) / (1000 * 60 * 60 * 24);
     let availableDates = [];
+    // Build selectable appointment dates
     for (let i = 0; i <= daysAvailable; i++) {
       const date = new Date(dateFrom);
       date.setDate(date.getDate() + i);

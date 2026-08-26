@@ -9,6 +9,7 @@ const SALT_ROUNDS = 10;
 const RESET_CODE_LENGTH = 8;
 const RESET_CODE_TTL_MS = 15 * 60 * 1000;
 
+// Generate short-lived reset code
 const generateResetCode = () =>
   crypto
     .randomBytes(RESET_CODE_LENGTH)
@@ -105,6 +106,7 @@ const verifyResetCode = async (req, res) => {
     !user.resetPasswordExpires ||
     user.resetPasswordExpires < new Date()
   ) {
+    // Reject expired reset codes
     return renderProfile(res, user, {
       errors: ["Verification code has expired. Please request a new one."],
     });

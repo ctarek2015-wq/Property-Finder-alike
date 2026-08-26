@@ -42,6 +42,7 @@
   images.forEach((image, index) => {
     image.addEventListener("click", () => open(index, image));
     image.addEventListener("keydown", (event) => {
+      // Open viewer from keyboard
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         open(index, image);
@@ -57,10 +58,12 @@
     touchStartX = event.changedTouches[0].screenX;
   });
   modal.addEventListener("touchend", (event) => {
+    // Support horizontal swipe navigation
     const distance = event.changedTouches[0].screenX - touchStartX;
     if (Math.abs(distance) > 50) move(distance > 0 ? -1 : 1);
   });
   document.addEventListener("keydown", (event) => {
+    // Handle viewer keyboard controls
     if (modal.hidden) return;
     if (event.key === "Escape") close();
     if (event.key === "ArrowLeft") move(-1);

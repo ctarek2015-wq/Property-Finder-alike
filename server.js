@@ -47,6 +47,7 @@ app.use("", pagesRouter);
 app.use("/auth", authRouter);
 
 // Custom Middleware
+// Protect private routes
 app.use(isSignedIn);
 // Private Routes
 app.use("/properties", propRouter);
@@ -54,7 +55,7 @@ app.use("/appointments", appointmentRouter);
 app.use("/reviews", reviewRouter);
 app.use("/profile", profileRouter);
 
-//port listening
+// Start server outside production
 if (process.env.NODE_ENV !== "production") {
   app.listen(port, () => {
     console.log(`The express app is ready on port ${port}!`);

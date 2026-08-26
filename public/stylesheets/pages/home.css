@@ -12,7 +12,7 @@
   margin: var(--space-2) auto;
 }
 
-/* hide the greeting while the filter panel is open */
+/* Hide greeting when filtering */
 .page-home .home-header:has(.home-filter-disclosure[open]) h1 {
   display: none;
 }

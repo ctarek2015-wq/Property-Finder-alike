@@ -31,6 +31,7 @@ const home = async (req, res) => {
       ? req.query.availability
       : "available";
 
+    // Build validated property filters
     const propertyQuery = {};
     if (priceMin !== undefined && priceMin)
       propertyQuery.price = { $gte: priceMin };
@@ -49,6 +50,7 @@ const home = async (req, res) => {
       propertyQuery.available = availability === "available";
 
     if (rating !== undefined && rating) {
+      // Filter by average rating
       const ratedProperties = await Review.aggregate([
         {
           $group: {

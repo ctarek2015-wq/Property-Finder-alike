@@ -78,6 +78,7 @@
 }
 
 .page-properties .current-image-item:has(input:checked) img {
+  /* Dim selected main image */
   opacity: 0.45;
 }
 

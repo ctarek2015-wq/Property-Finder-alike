@@ -78,6 +78,7 @@
       <form action="/properties/<%= property._id %>?_method=DELETE" method="post" class="delete-form"><button class="btn btn-delete">Delete Property</button></form>
       <% } %>
 
+      <%  /* Prevent duplicate active bookings */ %>
       <%  if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'confirmed' || viewing.status.toString() === 'pending')){ %>
       <a href="/appointments"><button class="btn">You have booked an appointment for this property</button></a>
       <%}else if(user.role === 'seeker'){ %>
@@ -112,6 +113,7 @@
     <% } %>
   </div>
 
+  <% /* Allow one review per property */ %>
   <% if(seekerViewings && seekerViewings.some(viewing => viewing.status.toString() === 'completed') && !propReviews.some(review => review.reviewerId.toString() === user._id.toString())){ %>
   <div id="leave-review-section" class="review-form-section">
     <h3 class="legend">Leave a Review:</h3>

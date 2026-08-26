@@ -101,8 +101,8 @@
         <p class="detail-item"><strong>Owner:</strong> <%= prop.owner.username %></p>
         <p class="detail-item"><strong>Location:</strong> <%= prop.location %></p>
         <p class="detail-item"><strong>Property Type:</strong> <%= prop.listingType %></p>
-        <p class="detail-item"><strong>Price:</strong> <%= prop.price %></p>
-        <p class="detail-item"><strong>Area:</strong> <%= prop.area %></p>
+        <p class="detail-item"><strong>Price:</strong> BHD <%= Number(prop.price).toLocaleString("en-US") %></p>
+        <p class="detail-item"><strong>Area:</strong> <%= prop.area %> m²</p>
         <% if(prop.available === true){ %>
         <p class="detail-item"><strong>Available for viewings</strong></p>
         <% }else{ %>

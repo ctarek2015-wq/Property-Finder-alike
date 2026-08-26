@@ -7,7 +7,7 @@ const sendAppointmentNotification = require("../services/sendAppointmentNotifica
 const index = async (req, res) => {
   try {
     const viewings = await Viewing.find()
-      .populate("propertyId", "title")
+      .populate("propertyId", "title price")
       .populate("ownerId", "username")
       .populate("viewerId", "username");
     const userReviews = await Review.find({ reviewerId: req.session.user._id });
@@ -77,7 +77,10 @@ const create = async (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    const viewing = await Viewing.findById(req.params.id);
+    const viewing = await Viewing.findById(req.params.id).populate(
+      "propertyId",
+      "title price",
+    );
     const prop = await Property.findById(viewing.propertyId._id).populate(
       "availableAppointments",
     );

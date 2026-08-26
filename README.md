@@ -73,7 +73,7 @@ Set `MONGODB_URI` to a development database, then run:
 npm run seed:mockdata
 ```
 
-This creates fifteen properties with four remote photos each, five Bahraini
+This creates fifteen properties with four remote images each, five Bahraini
 owners, and viewing appointment availability. All seeded owners use the
 password `MockOwner123!`; their emails are listed in
 [`mockdata/properties.js`](./mockdata/properties.js).
@@ -84,7 +84,9 @@ password `MockOwner123!`; their emails are listed in
 - [Property detail page wireframe](./public/wireframe/property-page.png)
 - [Property search results wireframe](./public/wireframe/search-results.png)
 - [Global navigation wireframe](./public/wireframe/global-navbar.png)
-- [Database entity relationship diagram](./public/erd/ERD.svg)
+- [Database entity relationship diagram](./public/erd/ERD.png)
+
+![Database entity relationship diagram](./public/erd/ERD.png)
 
 ## Technologies Used
 
@@ -102,8 +104,8 @@ password `MockOwner123!`; their emails are listed in
 
 - [Google Fonts](https://fonts.google.com/) provides the Manrope and Space
   Grotesk typefaces used by the interface.
-- [Picsum Photos](https://picsum.photos/) provides the remote placeholder images
-  used by the mock property data.
+- Brave image-search result URLs provide the remote demo property images used by
+  the mock property data. Image rights remain subject to each original source.
 - [Cloudinary](https://cloudinary.com/) provides image hosting and delivery for
   uploaded property media.
 

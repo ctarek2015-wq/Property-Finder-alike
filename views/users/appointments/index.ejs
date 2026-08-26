@@ -26,6 +26,7 @@
       <h3 class="legend">Viewing for <%= viewing.propertyId.title %></h3>
 
       <div class="appointment-details">
+        <p class="detail-item"><strong>Price:</strong> BHD <%= Number(viewing.propertyId.price).toLocaleString("en-US") %></p>
         <p class="detail-item"><strong>Appointment Date:</strong> <%= viewing.appointmentDate.toISOString().split('T')[0] %></p>
         <div class="time-slots-inline">
           <p class="detail-item"><strong>Appointment Time:</strong></p>

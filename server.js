@@ -65,10 +65,8 @@ app.use("/reviews", reviewRouter);
 app.use("/profile", profileRouter);
 
 // Start server outside production
-if (process.env.NODE_ENV !== "production") {
-  app.listen(port, () => {
-    console.log(`The express app is ready on port ${port}!`);
-  });
-}
+app.listen(port, "0.0.0.0", () => {
+  console.log(`The express app is ready on port ${port}!`);
+});
 
 module.exports = app;

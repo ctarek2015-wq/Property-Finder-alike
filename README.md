@@ -1,53 +1,115 @@
 # PropertySeeker
 
-# User Stories
+![Property detail page wireframe](./public/wireframe/property-page.png)
 
-## Identity & Roles
+PropertySeeker is a real estate marketplace for people looking to buy or rent
+homes in Bahrain. Seekers can browse and filter listings, inspect property
+images, book viewing appointments, and leave reviews after a completed visit.
+Owners can create and manage listings, upload property images, set viewing
+availability, and manage their upcoming appointments.
 
-- **As a User (AAU)**, I want to register as an "Owner" (to list properties) or a "Seeker" (to find a home) so my dashboard matches my goals.
+This project was built to make the property search experience more focused and
+useful for both sides of the marketplace, with dashboards and workflows that
+match each user's role.
 
-## Listings & Cloud Images (Owners Only)
+## Features
 
-- **As an Owner (AAO)**, I want to list a property for Sale or Rent, detailing the price, bedrooms, bathrooms, and square footage.
-- **As an Owner (AAO)**, I want to upload high-resolution images of the rooms and a floorplan so that potential buyers/renters can inspect the property online.
+- Owner and seeker registration with role-specific dashboards.
+- Property listings for sale or rent with details such as price, location,
+  bedrooms, bathrooms, and area.
+- Property image and floorplan uploads through Cloudinary.
+- Search, filtering, and pagination for property listings.
+- Viewing appointment availability and scheduling.
+- Appointment management for property owners.
+- Reviews and ratings for seekers after completed viewings.
+- Profile management and password reset emails.
 
-## Search, Filtering & Pagination (Seekers)
+## Getting Started
 
-- **As a Seeker (AAS)**, I want to filter search results by status (Rent/Buy), maximum price, area, and property type (Apartment/Villa) so I only see relevant homes.
+### Deployed App
 
-## Viewing Appointments
+[Open the deployed PropertySeeker app](https://propertyseeker.onrender.com/)
 
-- **As a Seeker (AAS)**, I want to select an available date and time slot from a calendar on the listing to schedule an in-person viewing once per date.
-- **As an Owner (AAO)**, I want to determine available dates and timeslots,also to see a schedule of all my upcoming property viewings so I can meet with potential clients.
+### Local Setup
 
-## Reviews & Ratings (Seekers Only)
+Prerequisites:
 
-- **As a Seeker (AAS)**, I want to leave a rating and review on a property's building/neighborhood after visiting, so other seekers know about noise levels or maintenance quality.
+- Node.js 20 or later.
+- A MongoDB database.
+- Cloudinary credentials for image uploads.
+- An email account or SMTP provider for notifications and password resets.
 
-#
+1. Install dependencies:
 
-# App Wireframes:
+   ```bash
+   npm install
+   ```
 
-### 1. Role Specific Dashboards:
+2. Create a `.env` file in the project root with the required configuration:
 
-![Role Specific Dashboards](./public/wireframe/roles-dashboards.png)
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   SESSION_SECRET=your_session_secret
+   EMAIL_USER=your_email_address
+   EMAIL_APP_PASSWORD=your_email_app_password
+   CLOUDINARY_URL=cloudinary://your_api_key:your_api_secret@your_cloud_name
+   PORT=3000
+   NODE_ENV=development
+   ```
 
-### 2. Property Detail Page:
+3. Start the development server:
 
-![Property Detail Page](./public/wireframe/property-page.png)
+   ```bash
+   npm run dev
+   ```
 
-### 3. Property Search Results Page:
+   The app runs at `http://localhost:3000` by default.
 
-![Property Search Results Page](./public/wireframe/search-results.png)
+### Seed Mock Properties
 
-### 4. Global Navigation Bar:
+Set `MONGODB_URI` to a development database, then run:
 
-![Global Navigation Bar](./public/wireframe/global-navbar.png)
+```bash
+npm run seed:mockdata
+```
 
-#
+This creates fifteen properties with four remote photos each, five Bahraini
+owners, and viewing appointment availability. All seeded owners use the
+password `MockOwner123!`; their emails are listed in
+[`mockdata/properties.js`](./mockdata/properties.js).
 
-# ERD:
+## Planning Materials
 
-![ERD](./public/erd/ERD.svg)
+- [Role-specific dashboard wireframes](./public/wireframe/roles-dashboards.png)
+- [Property detail page wireframe](./public/wireframe/property-page.png)
+- [Property search results wireframe](./public/wireframe/search-results.png)
+- [Global navigation wireframe](./public/wireframe/global-navbar.png)
+- [Database entity relationship diagram](./public/erd/ERD.svg)
 
-#
+## Technologies Used
+
+- JavaScript and Node.js.
+- Express 5 for the web server and routing.
+- EJS for server-rendered views.
+- MongoDB and Mongoose for data storage.
+- Cloudinary and Multer for image uploads.
+- Express Session and Connect Mongo for authentication sessions.
+- bcryptjs for password hashing.
+- Nodemailer for email notifications and password resets.
+- Morgan, method-override, dotenv, and Nodemon for supporting development.
+
+## Attributions
+
+- [Google Fonts](https://fonts.google.com/) provides the Manrope and Space
+  Grotesk typefaces used by the interface.
+- [Picsum Photos](https://picsum.photos/) provides the remote placeholder images
+  used by the mock property data.
+- [Cloudinary](https://cloudinary.com/) provides image hosting and delivery for
+  uploaded property media.
+
+## Next Steps
+
+- Add a first-visit onboarding message to introduce the Owner and Seeker
+  workflows.
+- Add loading screens and feedback states while listings, images, and forms are
+  being processed.

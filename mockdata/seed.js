@@ -80,13 +80,6 @@ async function seedMockData() {
         },
       );
     }
-
-    console.log(
-      `Seeded ${properties.length} mock properties for ${owners.size} owners.`,
-    );
-    console.log(
-      `Mock owner password for all seeded accounts: ${MOCK_OWNER_PASSWORD}`,
-    );
   } finally {
     await mongoose.disconnect();
   }

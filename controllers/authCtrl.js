@@ -110,13 +110,12 @@ const register = async (req, res) => {
 
     // Create user and session
     const createUser = await User.create(req.body);
-    // disabled email notification for now, as it was causing issues with the deployed app
 
-    // try {
-    //   await sendWelcomeEmail(createUser);
-    // } catch (emailError) {
-    //   console.log("Welcome email could not be sent:", emailError.message);
-    // }
+    try {
+      await sendWelcomeEmail(createUser);
+    } catch (emailError) {
+      console.error("Error sending welcome email:", emailError);
+    }
     req.session.user = {
       username: createUser.username,
       role: createUser.role,

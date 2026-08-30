@@ -51,23 +51,19 @@ const create = async (req, res) => {
     newViewing.propertyId = req.query.propertyId;
     newViewing.ownerId = prop.owner._id;
     await newViewing.save();
-    // disabled email notification for now, as it was causing issues with the deployed app
-    // try {
-    //   const owner = await User.findById(prop.owner);
-    //   if (owner) {
-    //     await sendAppointmentNotification({
-    //       owner,
-    //       seeker: req.session.user,
-    //       property: prop,
-    //       viewing: newViewing,
-    //     });
-    //   }
-    // } catch (emailError) {
-    //   console.log(
-    //     "Booking notification email could not be sent:",
-    //     emailError.message,
-    //   );
-    // }
+    try {
+      const owner = await User.findById(prop.owner);
+      if (owner) {
+        await sendAppointmentNotification({
+          owner,
+          seeker: req.session.user,
+          property: prop,
+          viewing: newViewing,
+        });
+      }
+    } catch (emailError) {
+      console.error("Error sending email notification:", emailError);
+    }
 
     res.redirect(`/appointments`);
   } catch (err) {
